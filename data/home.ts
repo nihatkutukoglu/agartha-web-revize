@@ -106,12 +106,3 @@ export const metrics = [
     icon: "customer",
   },
 ] as const;
-
-export const certifications = [
-  { label: "ISO 9001", type: "Kalite Yönetimi" },
-  { label: "ISO 20000-1", type: "Hizmet Yönetimi" },
-  { label: "ISO 27001", type: "Bilgi Güvenliği" },
-  { label: "SPICE Level 2", type: "Yazılım Süreçleri" },
-  { label: "2022 Teknoloji Ödülü", type: "Demo etiketi" },
-  { label: "2024 Teknoloji Ödülü", type: "Demo etiketi" },
-];
