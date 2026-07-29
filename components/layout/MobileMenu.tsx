@@ -70,7 +70,7 @@ export function MobileMenu({ isOpen, items, onClose }: MobileMenuProps) {
                 <span>/</span>
                 <button type="button">EN</button>
               </div>
-              <a className="button button--primary button--full" href="#demo" onClick={onClose}>
+              <a className="button button--primary button--full" href="#iletisim" onClick={onClose}>
                 Demo Talep Edin
                 <ArrowUpRight size={17} aria-hidden="true" />
               </a>

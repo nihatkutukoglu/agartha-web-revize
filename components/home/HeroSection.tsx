@@ -54,7 +54,7 @@ export function HeroSection() {
               Çözümlerimizi İnceleyin
               <ArrowUpRight size={18} aria-hidden="true" />
             </a>
-            <a className="button button--secondary button--hero" href="#sunum">
+            <a className="button button--secondary button--hero" href="#teknoloji">
               <FileText size={17} aria-hidden="true" />
               Kurumsal Sunumu Gör
             </a>
