@@ -17,7 +17,7 @@ export function FeaturedCtmSection() {
   const [demoRequest, setDemoRequest] = useState(0);
 
   return (
-    <section className="section featured-ctm">
+    <section className="section featured-ctm" id="ctm-demo">
       <div className="section__inner featured-ctm__grid">
         <SectionReveal className="featured-ctm__copy">
           <span className="section-kicker">ÖNE ÇIKAN ÇÖZÜM</span>
