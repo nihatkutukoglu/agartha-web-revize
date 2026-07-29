@@ -9,7 +9,6 @@ const visualAlt =
 
 export function CaseStudyVisual() {
   const [visualFailed, setVisualFailed] = useState(false);
-  const [logoFailed, setLogoFailed] = useState(false);
 
   return (
     <div className="case-study-visual">
@@ -34,19 +33,6 @@ export function CaseStudyVisual() {
         </div>
       )}
       <div className="case-study-visual__edge-wash" aria-hidden="true" />
-      {!logoFailed && (
-        <span className="case-study-visual__logo">
-          <Image
-            fill
-            src="/agartha-logo.png"
-            alt="Agartha Teknoloji logosu"
-            sizes="86px"
-            quality={95}
-            unoptimized
-            onError={() => setLogoFailed(true)}
-          />
-        </span>
-      )}
     </div>
   );
 }

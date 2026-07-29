@@ -7,6 +7,7 @@ import { SectionReveal } from "./SectionReveal";
 import { CaseStudyContentCard } from "./case-study/CaseStudyContentCard";
 import { CaseStudyVisual } from "./case-study/CaseStudyVisual";
 import { TransformationConnector } from "./case-study/TransformationConnector";
+import styles from "./CaseStudySection.module.css";
 
 const problems = [
   "Dağınık operasyon verileri",
@@ -39,36 +40,63 @@ export function CaseStudySection() {
   );
 
   return (
-    <section className="section case-study" id="basari-hikayesi">
+    <section
+      className={`section case-study ${styles.section}`}
+      id="basari-hikayesi"
+    >
       <div className="section__inner">
-        <SectionReveal className="section-heading section-heading--wide">
+        <SectionReveal
+          className={`section-heading section-heading--wide ${styles.sectionHeading}`}
+        >
           <span className="section-kicker">BAŞARI HİKÂYESİ</span>
           <h2>Karmaşık süreçlerden merkezi ve izlenebilir operasyona.</h2>
         </SectionReveal>
 
-        <SectionReveal className="case-study__frame">
-          <div className="case-study__title">
-            <span>VAKA 01</span>
-            <h3>Sivil havacılık denetim süreçlerinin dijital dönüşümü</h3>
+        <SectionReveal className={`case-study__frame ${styles.frame}`}>
+          <div className={styles.header}>
+            <div className={styles.headingBlock}>
+              <span className={styles.caseLabel}>VAKA 01</span>
+              <h3>Sivil havacılık denetim süreçlerinin dijital dönüşümü</h3>
+            </div>
+            <div className={styles.headerAside}>
+              <p>
+                Manuel ve dağınık denetim süreçlerinden merkezi, izlenebilir ve
+                raporlanabilir bir operasyon modeline geçiş.
+              </p>
+              <button
+                className={`case-study__link ${styles.link}`}
+                type="button"
+                onClick={showToast}
+              >
+                Vaka Çalışmasını İncele
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </button>
+            </div>
           </div>
-          <div className="case-study__hybrid">
+
+          <div className={styles.visualShell}>
             <CaseStudyVisual />
-            <CaseStudyContentCard
-              type="problem"
-              title="BAŞLANGIÇ NOKTASI"
-              items={problems}
-            />
-            <TransformationConnector />
-            <CaseStudyContentCard
-              type="result"
-              title="DÖNÜŞÜM SONUCU"
-              items={results}
-            />
           </div>
-          <button className="case-study__link" type="button" onClick={showToast}>
-            Vaka Çalışmasını İncele
-            <ArrowUpRight size={16} aria-hidden="true" />
-          </button>
+
+          <div className={styles.comparison}>
+            <div>
+              <CaseStudyContentCard
+                type="problem"
+                title="BAŞLANGIÇ NOKTASI"
+                items={problems}
+              />
+            </div>
+            <div className={styles.connector}>
+              <TransformationConnector />
+            </div>
+            <div>
+              <CaseStudyContentCard
+                type="result"
+                title="DÖNÜŞÜM SONUCU"
+                items={results}
+              />
+            </div>
+          </div>
         </SectionReveal>
       </div>
       <AnimatePresence>
