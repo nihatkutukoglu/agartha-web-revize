@@ -4409,6 +4409,10 @@ button.ctm-data-row:focus-visible {
   gap: 20px;
 }
 
+.solutions-grid > .solution-card:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 .solution-card {
   display: grid;
   min-height: 450px;

@@ -3,7 +3,7 @@ export type Solution = {
   category: string;
   description: string;
   features: string[];
-  visual: "aviation" | "operations" | "assets" | "energy";
+  visual: "aviation" | "operations" | "assets";
   dark?: boolean;
 };
 
@@ -32,14 +32,6 @@ export const solutions: Solution[] = [
       "Bakım, ekipman ve kurumsal varlık süreçlerini sürdürülebilir biçimde yöneten dijital sistem.",
     features: ["Bakım planlama", "Varlık takibi", "Süreç optimizasyonu"],
     visual: "assets",
-  },
-  {
-    name: "A-Charge",
-    category: "Yeni Nesil Enerji",
-    description:
-      "Elektrikli araç şarj operasyonlarının izlenmesi ve yönetilmesi için geliştirilen akıllı platform.",
-    features: ["İstasyon yönetimi", "Kullanım analizi", "Merkezi kontrol"],
-    visual: "energy",
   },
 ];
 

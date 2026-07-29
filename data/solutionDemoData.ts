@@ -1,16 +1,14 @@
-export type SolutionId = "ctm" | "bosseye" | "ebms" | "acharge";
+export type SolutionId = "ctm" | "bosseye" | "ebms";
 
 export type CtmDemoTab = "audits" | "licenses" | "reports";
 export type BossTimeRange = "today" | "week" | "month";
 export type BossStatusFilter = "all" | "normal" | "follow" | "critical";
 export type EbmsDemoTab = "assets" | "calendar" | "orders";
-export type AChargeDemoTab = "stations" | "usage";
 
 export const solutionIdsByVisual = {
   aviation: "ctm",
   operations: "bosseye",
   assets: "ebms",
-  energy: "acharge",
 } as const satisfies Record<string, SolutionId>;
 
 export const ctmSummary = [
@@ -180,61 +178,3 @@ export const ebmsWorkOrders = [
   { id: 2, title: "Elektrik kontrolü", status: "Atandı", owner: "Elektrik Ekibi" },
   { id: 3, title: "Motor bakımı", status: "Tamamlandı", owner: "Mekanik Bakım" },
 ] as const;
-
-export const aChargeTabs = [
-  { id: "stations", label: "İstasyonlar" },
-  { id: "usage", label: "Kullanım Analizi" },
-] as const;
-
-export const aChargeStations = [
-  {
-    id: 1,
-    name: "Ankara Merkez",
-    totalSockets: 8,
-    availableSockets: 5,
-    status: "Normal",
-    activeSockets: 3,
-    occupancy: 38,
-    dailyEnergy: "184 kWh",
-    lastAction: "4 dk önce",
-    position: "station-a",
-  },
-  {
-    id: 2,
-    name: "İstanbul Avrupa",
-    totalSockets: 12,
-    availableSockets: 4,
-    status: "Yoğun",
-    activeSockets: 8,
-    occupancy: 67,
-    dailyEnergy: "326 kWh",
-    lastAction: "1 dk önce",
-    position: "station-b",
-  },
-  {
-    id: 3,
-    name: "İzmir Operasyon",
-    totalSockets: 6,
-    availableSockets: 1,
-    status: "Bakım Kontrolü",
-    activeSockets: 4,
-    occupancy: 83,
-    dailyEnergy: "142 kWh",
-    lastAction: "18 dk önce",
-    position: "station-c",
-  },
-] as const;
-
-export const aChargeUsage = {
-  metrics: [
-    { label: "Toplam şarj işlemi", value: "146" },
-    { label: "Ortalama doluluk", value: "%63" },
-    { label: "Günlük enerji", value: "652 kWh" },
-  ],
-  periods: [
-    { label: "Sabah", value: 46, status: "Müsait" },
-    { label: "Öğle", value: 72, status: "Kullanımda" },
-    { label: "Akşam", value: 91, status: "Yoğun" },
-    { label: "Gece", value: 34, status: "Bakımda" },
-  ],
-} as const;

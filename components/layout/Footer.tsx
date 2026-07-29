@@ -1,7 +1,7 @@
 import { ArrowUpRight, MapPin } from "lucide-react";
 import { BrandLogo } from "@/components/shared/BrandLogo";
 
-const solutionLinks = ["CTM-ERP", "BossEYE", "Yalın EBMS", "A-Charge"];
+const solutionLinks = ["CTM-ERP", "BossEYE", "Yalın EBMS"];
 const corporateLinks = ["Hakkımızda", "Başarı Hikâyeleri", "Kariyer", "İletişim"];
 
 export function Footer() {

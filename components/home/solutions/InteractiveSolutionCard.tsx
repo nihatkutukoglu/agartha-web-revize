@@ -1,7 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import type { Solution } from "@/data/home";
 import type { SolutionId } from "@/data/solutionDemoData";
-import { AChargeMiniDemo } from "./AChargeMiniDemo";
 import { BossEyeMiniDemo } from "./BossEyeMiniDemo";
 import { CtmMiniDemo } from "./CtmMiniDemo";
 import { EbmsMiniDemo } from "./EbmsMiniDemo";
@@ -80,9 +79,6 @@ export function InteractiveSolutionCard({
         )}
         {solutionId === "ebms" && (
           <EbmsMiniDemo key={active ? "ebms-active" : "ebms-rest"} active={active} />
-        )}
-        {solutionId === "acharge" && (
-          <AChargeMiniDemo key={active ? "charge-active" : "charge-rest"} active={active} />
         )}
       </motion.div>
     </motion.article>
