@@ -92,11 +92,28 @@ export const whyAgarthaItems = [
 ] as const;
 
 export const metrics = [
-  { value: "50+", label: "Kurumsal İş Ortağı" },
-  { value: "8.000+", label: "Aktif Kullanıcı" },
-  { value: "4", label: "Ülkede Hizmet" },
-  { value: "70+", label: "Başarılı Proje" },
-];
+  {
+    value: 50,
+    decimals: 0,
+    suffix: "",
+    label: "Kurumsal Müşteri",
+    icon: "plus",
+  },
+  {
+    value: 74,
+    decimals: 0,
+    suffix: "",
+    label: "Başarılı Proje",
+    icon: "growth",
+  },
+  {
+    value: 99.2,
+    decimals: 1,
+    suffix: "%",
+    label: "Müşteri Memnuniyeti",
+    icon: "customer",
+  },
+] as const;
 
 export const certifications = [
   { label: "ISO 9001", type: "Kalite Yönetimi" },
