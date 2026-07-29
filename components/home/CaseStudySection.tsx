@@ -1,5 +1,12 @@
-import { ArrowRight, ArrowUpRight, Check, CircleAlert } from "lucide-react";
+"use client";
+
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, Info, X } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { SectionReveal } from "./SectionReveal";
+import { CaseStudyContentCard } from "./case-study/CaseStudyContentCard";
+import { CaseStudyVisual } from "./case-study/CaseStudyVisual";
+import { TransformationConnector } from "./case-study/TransformationConnector";
 
 const problems = [
   "Dağınık operasyon verileri",
@@ -15,6 +22,22 @@ const results = [
 ];
 
 export function CaseStudySection() {
+  const [toast, setToast] = useState<string | null>(null);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = useCallback(() => {
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    setToast("Detaylı vaka çalışması demo kapsamında hazırlanacaktır.");
+    toastTimer.current = setTimeout(() => setToast(null), 2800);
+  }, []);
+
+  useEffect(
+    () => () => {
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+    },
+    [],
+  );
+
   return (
     <section className="section case-study" id="basari-hikayesi">
       <div className="section__inner">
@@ -28,39 +51,45 @@ export function CaseStudySection() {
             <span>VAKA 01</span>
             <h3>Sivil havacılık denetim süreçlerinin dijital dönüşümü</h3>
           </div>
-          <div className="case-study__comparison">
-            <div className="case-panel case-panel--problem">
-              <span className="case-panel__label">
-                <CircleAlert size={15} aria-hidden="true" />
-                BAŞLANGIÇ NOKTASI
-              </span>
-              <ul>
-                {problems.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <span className="case-study__arrow" aria-hidden="true">
-              <ArrowRight size={22} />
-            </span>
-            <div className="case-panel case-panel--result">
-              <span className="case-panel__label">
-                <Check size={15} aria-hidden="true" />
-                DÖNÜŞÜM SONUCU
-              </span>
-              <ul>
-                {results.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
+          <div className="case-study__hybrid">
+            <CaseStudyVisual />
+            <CaseStudyContentCard
+              type="problem"
+              title="BAŞLANGIÇ NOKTASI"
+              items={problems}
+            />
+            <TransformationConnector />
+            <CaseStudyContentCard
+              type="result"
+              title="DÖNÜŞÜM SONUCU"
+              items={results}
+            />
           </div>
-          <a href="#iletisim">
+          <button className="case-study__link" type="button" onClick={showToast}>
             Vaka Çalışmasını İncele
             <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
+          </button>
         </SectionReveal>
       </div>
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            className="case-study-toast"
+            data-testid="case-study-toast"
+            role="status"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.18 }}
+          >
+            <Info size={15} aria-hidden="true" />
+            <span>{toast}</span>
+            <button type="button" aria-label="Bildirimi kapat" onClick={() => setToast(null)}>
+              <X size={13} aria-hidden="true" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
