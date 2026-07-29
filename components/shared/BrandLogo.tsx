@@ -1,25 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type BrandLogoProps = {
-  compact?: boolean;
   className?: string;
 };
 
-export function BrandLogo({ compact = false, className = "" }: BrandLogoProps) {
-  const [hasError, setHasError] = useState(false);
+export function BrandLogo({ className = "" }: BrandLogoProps) {
+  const [imageAvailable, setImageAvailable] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    const logoImage = new window.Image();
+    logoImage.onload = () => {
+      if (isMounted) setImageAvailable(true);
+    };
+    logoImage.src = "/agartha-logo.png";
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <span
-      className={`brand-logo ${compact ? "brand-logo--compact" : ""} ${className}`}
+      className={`brand-logo ${className}`}
       aria-label="Agartha Teknoloji"
     >
       <span className="brand-logo__fallback" aria-hidden="true">
         <span>A</span>
-        {!compact && <small>AGARTHA</small>}
+        <small>AGARTHA TEKNOLOJİ</small>
       </span>
-      {!hasError && (
+      {imageAvailable && (
         // The logo is user-supplied at runtime, so a native image lets the
         // branded fallback remain available until the file is added.
         // eslint-disable-next-line @next/next/no-img-element
@@ -27,7 +39,6 @@ export function BrandLogo({ compact = false, className = "" }: BrandLogoProps) {
           className="brand-logo__image"
           src="/agartha-logo.png"
           alt="Agartha Teknoloji logosu"
-          onError={() => setHasError(true)}
         />
       )}
     </span>

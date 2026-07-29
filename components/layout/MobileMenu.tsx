@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
 import type { NavigationItem } from "@/data/navigation";
 
@@ -11,6 +11,8 @@ type MobileMenuProps = {
 };
 
 export function MobileMenu({ isOpen, items, onClose }: MobileMenuProps) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -26,10 +28,10 @@ export function MobileMenu({ isOpen, items, onClose }: MobileMenuProps) {
           <motion.aside
             className="mobile-menu"
             aria-label="Mobil navigasyon"
-            initial={{ opacity: 0, x: 28 }}
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 28 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 28 }}
-            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 28 }}
+            transition={{ duration: reduceMotion ? 0.15 : 0.24, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="mobile-menu__top">
               <span className="mobile-menu__eyebrow">MENÜ</span>
@@ -50,9 +52,9 @@ export function MobileMenu({ isOpen, items, onClose }: MobileMenuProps) {
                   href={item.href}
                   className={item.active ? "is-active" : ""}
                   onClick={onClose}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={reduceMotion ? false : { opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.04 * index }}
+                  transition={{ delay: reduceMotion ? 0 : 0.04 * index }}
                 >
                   <span>{item.label}</span>
                   <span className="mobile-menu__index">
@@ -68,9 +70,9 @@ export function MobileMenu({ isOpen, items, onClose }: MobileMenuProps) {
                 <span>/</span>
                 <button type="button">EN</button>
               </div>
-              <a className="button button--gold button--full" href="#demo" onClick={onClose}>
+              <a className="button button--primary button--full" href="#demo" onClick={onClose}>
                 Demo Talep Edin
-                <ArrowUpRight size={17} />
+                <ArrowUpRight size={17} aria-hidden="true" />
               </a>
             </div>
           </motion.aside>
