@@ -10,23 +10,27 @@ import { WhyAgarthaSection } from "@/components/home/WhyAgarthaSection";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { PageTransition } from "@/components/layout/PageTransition";
+import { ChatbotWidget } from "@/components/chatbot/ChatbotWidget";
 
 export default function Home() {
   return (
-    <PageTransition>
-      <main className="site-shell" id="top">
-        <Navbar />
-        <HeroSection />
-        <TrustBar />
-        <SolutionsSection />
-        <TechnologyVideoSection />
-        <FeaturedCtmSection />
-        <WhyAgarthaSection />
-        <CaseStudySection />
-        <CertificationsSection />
-        <ContactSection />
-        <Footer />
-      </main>
-    </PageTransition>
+    <>
+      <PageTransition>
+        <main className="site-shell" id="top">
+          <Navbar />
+          <HeroSection />
+          <TrustBar />
+          <SolutionsSection />
+          <TechnologyVideoSection />
+          <FeaturedCtmSection />
+          <WhyAgarthaSection />
+          <CaseStudySection />
+          <CertificationsSection />
+          <ContactSection />
+          <Footer />
+        </main>
+      </PageTransition>
+      <ChatbotWidget />
+    </>
   );
 }

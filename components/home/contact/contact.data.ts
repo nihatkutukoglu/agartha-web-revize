@@ -2,7 +2,6 @@ export const solutionOptions = [
   { value: "ctm-erp", label: "CTM-ERP" },
   { value: "bosseye", label: "BossEYE" },
   { value: "yalin-ebms", label: "Yalın EBMS" },
-  { value: "a-charge", label: "A-Charge" },
   { value: "custom-software", label: "Kuruma Özel Yazılım" },
   { value: "other", label: "Diğer" },
 ] as const;
