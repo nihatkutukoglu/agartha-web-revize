@@ -161,7 +161,7 @@ export function ChatbotWidget() {
               <div className={styles.identity}>
                 <span className={styles.identityLogo} aria-hidden="true">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/agartha-logo.png" alt="" />
+                  <img src="/agartha-chatbot-logo.png" alt="" />
                 </span>
                 <span className={styles.identityText}>
                   <strong>Agartha Asistan</strong>
@@ -193,7 +193,7 @@ export function ChatbotWidget() {
                   {message.role === "assistant" && (
                     <span className={styles.avatar} aria-hidden="true">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/agartha-logo.png" alt="" />
+                      <img src="/agartha-chatbot-logo.png" alt="" />
                     </span>
                   )}
                   <div className={styles.bubble}>
@@ -286,7 +286,7 @@ export function ChatbotWidget() {
         onClick={() => setOpen((current) => !current)}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/agartha-logo.png" alt="" />
+        <img src="/agartha-chatbot-logo.png" alt="" />
         <span className={styles.onlineDot} aria-hidden="true" />
         <span className={styles.launcherBadge} aria-hidden="true">
           {open ? <X size={13} /> : <MessageCircle size={13} />}

@@ -11,12 +11,12 @@
   display: grid;
   width: 72px;
   height: 72px;
-  padding: 7px;
+  padding: 4px;
   place-items: center;
   overflow: visible;
   border: 1px solid rgba(200, 166, 108, 0.54);
   border-radius: 50%;
-  background: #fff;
+  background: var(--color-navy);
   box-shadow:
     0 18px 45px rgba(23, 34, 49, 0.2),
     0 0 0 7px rgba(255, 255, 255, 0.72);
@@ -45,10 +45,14 @@
 }
 
 .launcher img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: 4px;
+  display: block;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
   border-radius: 50%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center 45%;
 }
 
 .launcherBadge {
@@ -119,16 +123,21 @@
   height: 48px;
   flex: 0 0 auto;
   place-items: center;
-  padding: 4px;
+  padding: 2px;
   border: 1px solid rgba(200, 166, 108, 0.35);
   border-radius: 50%;
-  background: #fff;
+  background: #0e1825;
 }
 
 .identityLogo img {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 45%;
 }
 
 .identityText {
@@ -203,13 +212,17 @@
   overflow: hidden;
   border: 1px solid rgba(166, 124, 69, 0.24);
   border-radius: 50%;
-  background: #fff;
+  background: #0e1825;
 }
 
 .avatar img {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  min-width: 0;
+  min-height: 0;
+  object-fit: cover;
+  object-position: center 45%;
 }
 
 .bubble {
