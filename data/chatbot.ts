@@ -7,6 +7,12 @@ export type ChatbotReply = {
   message: string;
   intent: string;
   action?: ChatAction;
+  followUp?: ChatFollowUp;
+};
+
+export type ChatFollowUp = {
+  question: string;
+  options: readonly string[];
 };
 
 type ChatbotIntent = {
@@ -14,6 +20,7 @@ type ChatbotIntent = {
   keywords: readonly string[];
   response: string;
   action?: ChatAction;
+  followUp?: ChatFollowUp;
 };
 
 const contactAction: ChatAction = {
@@ -21,7 +28,24 @@ const contactAction: ChatAction = {
   target: "#iletisim",
 };
 
+const productFollowUp: ChatFollowUp = {
+  question:
+    "Dilerseniz çözümü kurumunuza özel bir demoda inceleyebilirsiniz. Nasıl ilerlemek istersiniz?",
+  options: ["Demo Talep Et", "Diğer Çözümleri Gör", "Şimdilik Hayır"],
+};
+
 const chatbotIntents: ChatbotIntent[] = [
+  {
+    id: "decline_follow_up",
+    keywords: [
+      "şimdilik hayır",
+      "hayır teşekkürler",
+      "istemiyorum",
+      "şu an değil",
+    ],
+    response:
+      "Elbette. Başka bir sorunuz olursa buradayım; dilediğiniz zaman ürünlerimiz veya hizmetlerimiz hakkında bilgi alabilirsiniz.",
+  },
   {
     id: "greeting",
     keywords: [
@@ -123,6 +147,7 @@ const chatbotIntents: ChatbotIntent[] = [
     ],
     response:
       "CTM-ERP; denetim, lisanslama, kurum yönetimi ve raporlama süreçlerini tek bir modüler platformda bir araya getiren sivil havacılık çözümümüzdür.",
+    followUp: productFollowUp,
   },
   {
     id: "boss_eye",
@@ -137,6 +162,7 @@ const chatbotIntents: ChatbotIntent[] = [
     ],
     response:
       "BossEYE; operasyonel verileri izlenebilir ve ölçülebilir iş akışlarına dönüştüren, karar destek yeteneklerine sahip kurumsal yönetim çözümümüzdür.",
+    followUp: productFollowUp,
   },
   {
     id: "yalin_ebms",
@@ -152,6 +178,7 @@ const chatbotIntents: ChatbotIntent[] = [
     ],
     response:
       "Yalın EBMS; bakım, ekipman ve kurumsal varlık süreçlerini sürdürülebilir biçimde yöneten dijital sistemimizdir.",
+    followUp: productFollowUp,
   },
   {
     id: "pricing",
@@ -297,5 +324,6 @@ export function getChatbotReply(message: string): ChatbotReply {
     intent: bestIntent.id,
     message: bestIntent.response,
     action: bestIntent.action,
+    followUp: bestIntent.followUp,
   };
 }

@@ -19,6 +19,7 @@ import {
   chatbotQuickPrompts,
   getChatbotReply,
   type ChatAction,
+  type ChatFollowUp,
 } from "@/data/chatbot";
 import styles from "./ChatbotWidget.module.css";
 
@@ -27,6 +28,7 @@ type ChatMessage = {
   role: "assistant" | "user";
   content: string;
   action?: ChatAction;
+  followUp?: ChatFollowUp;
 };
 
 const initialMessage: ChatMessage = {
@@ -100,6 +102,7 @@ export function ChatbotWidget() {
             role: "assistant",
             content: reply.message,
             action: reply.action,
+            followUp: reply.followUp,
           },
         ]);
         setTyping(false);
@@ -208,6 +211,26 @@ export function ChatbotWidget() {
                         <ChevronRight size={14} aria-hidden="true" />
                       </button>
                     )}
+                    {message.followUp && (
+                      <div className={styles.followUp}>
+                        <p>{message.followUp.question}</p>
+                        <div className={styles.followUpOptions}>
+                          {message.followUp.options.map((option) => (
+                            <button
+                              type="button"
+                              onClick={() => sendMessage(option)}
+                              disabled={
+                                typing ||
+                                message.id !== messages[messages.length - 1]?.id
+                              }
+                              key={option}
+                            >
+                              {option}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                   {message.role === "user" && (
                     <span className={styles.avatar} aria-hidden="true">
@@ -221,7 +244,7 @@ export function ChatbotWidget() {
                 <div className={styles.messageRow} aria-label="Asistan yazıyor">
                   <span className={styles.avatar} aria-hidden="true">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/agartha-logo.png" alt="" />
+                    <img src="/agartha-chatbot-logo.png" alt="" />
                   </span>
                   <span className={`${styles.bubble} ${styles.typing}`}>
                     <span />
