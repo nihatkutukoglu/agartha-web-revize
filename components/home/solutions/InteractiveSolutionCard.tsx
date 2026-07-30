@@ -26,13 +26,6 @@ export function InteractiveSolutionCard({
   onScrollToCtm,
 }: InteractiveSolutionCardProps) {
   const reduceMotion = useReducedMotion();
-  const inspect = () => {
-    if (solutionId === "ctm") {
-      onScrollToCtm();
-      return;
-    }
-    onToast("Ürün detay sayfası demo kapsamında hazırlanacaktır.");
-  };
 
   return (
     <motion.article
@@ -59,7 +52,6 @@ export function InteractiveSolutionCard({
         solutionId={solutionId}
         active={active}
         onToggle={onToggle}
-        onInspect={inspect}
       />
       <motion.div
         className="solution-card__demo"

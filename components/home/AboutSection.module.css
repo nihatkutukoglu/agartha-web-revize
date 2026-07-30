@@ -1,0 +1,515 @@
+.section {
+  position: relative;
+  z-index: 5;
+  padding-top: 104px;
+  padding-bottom: 104px;
+  background: var(--color-canvas);
+  overflow: hidden;
+}
+
+.decorContainer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.bgCircle {
+  position: absolute;
+  top: -150px;
+  right: -250px;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(166, 124, 69, 0.05) 0%, transparent 70%);
+}
+
+.inner {
+  position: relative;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 64px;
+  align-items: start;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-technical);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-bronze);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(42px, 4.5vw, 64px);
+  font-weight: 600;
+  color: var(--color-navy);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.headerRight {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  padding-top: 10px;
+}
+
+.description {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-muted);
+  max-width: 600px;
+}
+
+.storyContainer {
+  display: grid;
+  grid-template-columns: 54% 42%;
+  gap: 4%;
+  margin-bottom: 80px;
+  align-items: stretch;
+}
+
+.visualWrapper {
+  position: relative;
+  width: 100%;
+  height: 640px;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(23, 34, 49, 0.06);
+  border: 1px solid rgba(23, 27, 33, 0.06);
+  background-color: #ECEAE4;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s var(--ease-premium);
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #F3F1EB 0%, #E8E5DC 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.placeholderDecor {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(166, 124, 69, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(166, 124, 69, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.infoCard {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 20px 24px;
+  border-radius: 20px;
+  max-width: 280px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.infoCardIcon {
+  color: var(--color-bronze);
+  margin-bottom: 12px;
+}
+
+.infoCardTitle {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--color-navy);
+  font-size: 15px;
+  margin: 0 0 6px 0;
+}
+
+.infoCardText {
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.storyContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.storyEyebrow {
+  font-family: var(--font-technical);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-muted);
+  margin-bottom: 16px;
+}
+
+.storyTitle {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 42px);
+  color: var(--color-navy);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin: 0 0 32px 0;
+  text-wrap: balance;
+}
+
+.storyParagraph {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-muted);
+  margin: 0 0 20px 0;
+}
+
+.storySignature {
+  margin-top: auto;
+  padding-top: 32px;
+  font-family: var(--font-technical);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-navy);
+}
+
+.storySignature::before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--color-bronze);
+  margin-bottom: 12px;
+}
+
+.capabilitiesHeader {
+  margin-bottom: 32px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--color-navy);
+  font-weight: 600;
+}
+
+.capabilitiesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 80px;
+}
+
+.capabilityCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 32px;
+  background: var(--color-canvas-light);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  transition: transform 300ms var(--ease-premium), box-shadow 300ms var(--ease-premium);
+}
+
+.capabilityCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(23, 34, 49, 0.05);
+}
+
+.capabilityIcon {
+  color: var(--color-bronze);
+  flex-shrink: 0;
+}
+
+.capabilityContent h4 {
+  margin: 0 0 8px 0;
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--color-navy);
+  font-weight: 600;
+}
+
+.capabilityContent p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.bottomSection {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  padding-top: 60px;
+  border-top: 1px solid var(--color-border);
+  margin-bottom: 60px;
+}
+
+.metricsRow {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.metricItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metricValue {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--color-navy);
+  letter-spacing: -0.02em;
+}
+
+.metricLabel {
+  font-family: var(--font-technical);
+  font-size: 11px;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.timeline {
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+  max-width: 700px;
+  position: relative;
+}
+
+.timelineLine {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-border);
+  z-index: 0;
+}
+
+.timelineItem {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  padding-right: 20px;
+}
+
+.timelineDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-bronze);
+  margin-bottom: 24px;
+  position: relative;
+  top: 9px;
+  box-shadow: 0 0 0 4px var(--color-canvas);
+}
+
+.timelineYear {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-navy);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.timelineTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-navy);
+  margin: 0 0 4px 0;
+}
+
+.timelineDesc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.ctaArea {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 48px;
+  background: var(--color-navy);
+  border-radius: 28px;
+}
+
+.ctaText {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 16px;
+}
+
+.btnPrimary {
+  background: #fff;
+  color: var(--color-navy);
+  border: 1px solid #fff;
+}
+
+.btnPrimary:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.btnSecondary {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btnSecondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 1024px) {
+  .header {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  
+  .storyContainer {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .visualWrapper {
+    height: 480px;
+  }
+  
+  .bottomSection {
+    flex-direction: column;
+    gap: 48px;
+  }
+  
+  .timeline {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .ctaArea {
+    flex-direction: column;
+    text-align: center;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  
+  .inner {
+    padding: 0 20px;
+  }
+  
+  .title {
+    font-size: clamp(34px, 8vw, 42px);
+  }
+  
+  .capabilitiesGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .visualWrapper {
+    height: 380px;
+  }
+  
+  .infoCard {
+    position: static;
+    margin-top: 16px;
+    max-width: 100%;
+    background: var(--color-canvas-light);
+    border-color: var(--color-border);
+  }
+  
+  .metricsRow {
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  
+  .timeline {
+    flex-direction: column;
+    gap: 32px;
+  }
+  
+  .timelineLine {
+    top: 0;
+    bottom: 0;
+    left: 12px;
+    width: 1px;
+    height: auto;
+  }
+  
+  .timelineItem {
+    padding-left: 36px;
+    padding-right: 0;
+  }
+  
+  .timelineDot {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    margin: 0;
+  }
+  
+  .ctaButtons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .btnPrimary, .btnSecondary {
+    width: 100%;
+  }
+}

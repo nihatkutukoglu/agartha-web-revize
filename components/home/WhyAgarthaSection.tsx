@@ -31,7 +31,11 @@ export function WhyAgarthaSection() {
           {whyAgarthaItems.map((item, index) => {
             const Icon = whyIcons[item.icon];
             return (
-              <SectionReveal className="why-card" delay={(index % 3) * 0.06} key={item.title}>
+              <SectionReveal 
+                className={`why-card ${index === 0 || index === 4 ? "why-card--span-2" : ""}`} 
+                delay={(index % 3) * 0.06} 
+                key={item.title}
+              >
                 <span className="why-card__icon">
                   <Icon size={18} aria-hidden="true" />
                 </span>

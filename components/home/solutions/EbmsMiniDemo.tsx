@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Cog, Wrench } from "lucide-react";
+import { Cog, Wrench, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import {
   ebmsAssets,
@@ -125,6 +125,13 @@ export function EbmsMiniDemo({ active }: EbmsMiniDemoProps) {
             </motion.div>
           </AnimatePresence>
           <p className="solution-mini__tagline">Bakımı arıza oluşmadan önce yönetin.</p>
+          <button
+            className="solution-mini__detail-link"
+            type="button"
+            onClick={() => { document.getElementById('iletisim')?.scrollIntoView({ behavior: 'smooth' }); }}
+          >
+            Demo talebi için tıklayınız <ArrowRight size={13} aria-hidden="true" />
+          </button>
         </>
       ) : (
         <div className="solution-mini__preview-list" aria-hidden="true">

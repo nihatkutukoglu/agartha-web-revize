@@ -135,9 +135,9 @@ export function CtmMiniDemo({
             className="solution-mini__detail-link"
             data-testid="ctm-mini-detail-link"
             type="button"
-            onClick={onScrollToDetail}
+            onClick={() => { document.getElementById('iletisim')?.scrollIntoView({ behavior: 'smooth' }); }}
           >
-            Detaylı CTM-ERP demosunu keşfedin <ArrowRight size={13} aria-hidden="true" />
+            Demo talebi için tıklayınız <ArrowRight size={13} aria-hidden="true" />
           </button>
         </>
       ) : (

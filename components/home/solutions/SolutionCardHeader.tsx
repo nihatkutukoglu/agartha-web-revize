@@ -1,4 +1,4 @@
-import { ArrowUpRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import type { Solution } from "@/data/home";
 import type { SolutionId } from "@/data/solutionDemoData";
 
@@ -7,7 +7,6 @@ interface SolutionCardHeaderProps {
   solutionId: SolutionId;
   active: boolean;
   onToggle: () => void;
-  onInspect: () => void;
 }
 
 export function SolutionCardHeader({
@@ -15,7 +14,6 @@ export function SolutionCardHeader({
   solutionId,
   active,
   onToggle,
-  onInspect,
 }: SolutionCardHeaderProps) {
   return (
     <div className="solution-card__copy">
@@ -31,18 +29,19 @@ export function SolutionCardHeader({
         ))}
       </ul>
       <div className="solution-card__actions">
-        <button className="solution-card__inspect" type="button" onClick={onInspect}>
-          Çözümü İncele
-          <ArrowUpRight size={15} aria-hidden="true" />
-        </button>
         <button
           className="solution-card__toggle"
           data-testid={`solution-toggle-${solutionId}`}
           type="button"
           aria-expanded={active}
-          onClick={onToggle}
+          onClick={() => {
+            onToggle();
+            const subject = encodeURIComponent(`${solution.name} Hakkında Bilgi ve Demo Talebi`);
+            const body = encodeURIComponent(`Merhaba,\n\nBen ${solution.name} sistemi hakkında detaylı bilgi almak ve demoya ulaşmak istiyorum.\n\nİyi çalışmalar.`);
+            window.location.href = `mailto:info@agarthateknoloji.com?cc=satis@agarthateknoloji.com&subject=${subject}&body=${body}`;
+          }}
         >
-          {active ? "Demoyu Kapat" : "Mini Demoyu Keşfet"}
+          {active ? "Çözümü Kapat" : "Çözümü İncele"}
         </button>
       </div>
     </div>

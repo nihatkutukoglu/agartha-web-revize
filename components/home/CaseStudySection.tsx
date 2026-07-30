@@ -4,9 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Info, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SectionReveal } from "./SectionReveal";
-import { CaseStudyContentCard } from "./case-study/CaseStudyContentCard";
 import { CaseStudyVisual } from "./case-study/CaseStudyVisual";
-import { TransformationConnector } from "./case-study/TransformationConnector";
 import styles from "./CaseStudySection.module.css";
 
 const problems = [
@@ -75,27 +73,7 @@ export function CaseStudySection() {
           </div>
 
           <div className={styles.visualShell}>
-            <CaseStudyVisual />
-          </div>
-
-          <div className={styles.comparison}>
-            <div>
-              <CaseStudyContentCard
-                type="problem"
-                title="BAŞLANGIÇ NOKTASI"
-                items={problems}
-              />
-            </div>
-            <div className={styles.connector}>
-              <TransformationConnector />
-            </div>
-            <div>
-              <CaseStudyContentCard
-                type="result"
-                title="DÖNÜŞÜM SONUCU"
-                items={results}
-              />
-            </div>
+            <CaseStudyVisual problems={problems} results={results} />
           </div>
         </SectionReveal>
       </div>

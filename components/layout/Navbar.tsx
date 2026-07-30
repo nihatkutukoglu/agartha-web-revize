@@ -36,7 +36,7 @@ export function Navbar() {
         transition={{ duration: reduceMotion ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="navbar__inner">
-          <a className="navbar__brand" href="#top" aria-label="Agartha Teknoloji ana sayfa">
+          <a className="navbar__brand" href="/" aria-label="Agartha Teknoloji ana sayfa">
             <BrandLogo />
           </a>
 
@@ -58,7 +58,7 @@ export function Navbar() {
               <span>/</span>
               <button type="button">EN</button>
             </div>
-            <a className="button button--primary navbar__cta" href="#iletisim">
+            <a className="button button--primary navbar__cta" href="/#iletisim">
               Demo Talep Edin
               <ArrowUpRight size={16} aria-hidden="true" />
             </a>

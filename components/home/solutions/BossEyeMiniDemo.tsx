@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Activity, BellRing, ListChecks } from "lucide-react";
+import { Activity, BellRing, ListChecks, ArrowRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
   bossDemoData,
@@ -101,6 +101,13 @@ export function BossEyeMiniDemo({ active }: BossEyeMiniDemoProps) {
               ))}
             </div>
           </AnimatePresence>
+          <button
+            className="solution-mini__detail-link"
+            type="button"
+            onClick={() => { document.getElementById('iletisim')?.scrollIntoView({ behavior: 'smooth' }); }}
+          >
+            Demo talebi için tıklayınız <ArrowRight size={13} aria-hidden="true" />
+          </button>
         </>
       ) : (
         <div className="solution-mini__preview-list" aria-hidden="true">
