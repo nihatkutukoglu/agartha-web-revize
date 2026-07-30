@@ -87,6 +87,7 @@
   display: grid;
   width: min(390px, calc(100vw - 32px));
   height: min(600px, calc(100vh - 142px));
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto minmax(0, 1fr) auto;
   overflow: hidden;
   border: 1px solid rgba(23, 34, 49, 0.13);
@@ -98,6 +99,8 @@
 
 .header {
   display: flex;
+  width: 100%;
+  min-width: 0;
   min-height: 82px;
   align-items: center;
   justify-content: space-between;
@@ -184,6 +187,8 @@
 
 .messages {
   display: flex;
+  width: 100%;
+  min-width: 0;
   min-height: 0;
   flex-direction: column;
   gap: 13px;
@@ -195,12 +200,21 @@
 
 .messageRow {
   display: flex;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   align-items: flex-end;
   gap: 8px;
 }
 
 .messageRowUser {
   justify-content: flex-end;
+}
+
+.messageRowUser .avatar {
+  border-color: rgba(200, 166, 108, 0.38);
+  background: var(--color-navy);
+  color: var(--color-bronze-light);
 }
 
 .avatar {
@@ -226,6 +240,7 @@
 }
 
 .bubble {
+  min-width: 0;
   max-width: 81%;
   padding: 12px 13px;
   border: 1px solid rgba(23, 34, 49, 0.08);
@@ -235,7 +250,9 @@
   color: #474c49;
   font-size: 13px;
   line-height: 1.55;
+  overflow-wrap: anywhere;
   white-space: pre-line;
+  word-break: break-word;
 }
 
 .messageRowUser .bubble {
@@ -286,6 +303,9 @@
 
 .quickPrompts {
   display: flex;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   gap: 7px;
   overflow-x: auto;
   padding: 0 16px 12px;
@@ -310,12 +330,18 @@
 }
 
 .composer {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
   border-top: 1px solid rgba(23, 34, 49, 0.09);
   background: rgba(255, 255, 255, 0.82);
 }
 
 .form {
   display: grid;
+  width: 100%;
+  min-width: 0;
   grid-template-columns: minmax(0, 1fr) 45px;
   align-items: end;
   gap: 9px;
@@ -324,6 +350,7 @@
 
 .input {
   width: 100%;
+  min-width: 0;
   min-height: 45px;
   max-height: 100px;
   padding: 12px 13px;
