@@ -2,15 +2,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, FileBarChart, Plane, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import {
-  ctmAudits,
-  ctmAuditStages,
-  ctmLicenses,
-  ctmReports,
-  ctmSummary,
-  ctmTabs,
+  getCtmAudits,
+  getCtmAuditStages,
+  getCtmLicenses,
+  getCtmReports,
+  getCtmSummary,
+  getCtmTabs,
   type CtmDemoTab,
 } from "@/data/solutionDemoData";
 import { SolutionTabs } from "./SolutionTabs";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
 interface CtmMiniDemoProps {
   active: boolean;
@@ -23,6 +25,15 @@ export function CtmMiniDemo({
   onToast,
   onScrollToDetail,
 }: CtmMiniDemoProps) {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const ctmAudits = getCtmAudits(lang);
+  const ctmAuditStages = getCtmAuditStages(lang);
+  const ctmLicenses = getCtmLicenses(lang);
+  const ctmReports = getCtmReports(lang);
+  const ctmSummary = getCtmSummary(lang);
+  const ctmTabs = getCtmTabs(lang);
+
   const [activeTab, setActiveTab] = useState<CtmDemoTab>("audits");
   const [selectedAuditId, setSelectedAuditId] = useState<number | null>(null);
   const selectedAudit = ctmAudits.find((audit) => audit.id === selectedAuditId);
@@ -30,8 +41,8 @@ export function CtmMiniDemo({
   return (
     <div className="solution-mini solution-mini--ctm" data-testid="ctm-mini-demo">
       <header className="solution-mini__bar">
-        <span><Plane size={14} aria-hidden="true" /> CTM Operasyon</span>
-        <em>CANLI ÖNİZLEME</em>
+        <span><Plane size={14} aria-hidden="true" /> {lang === "en" ? "CTM Operation" : "CTM Operasyon"}</span>
+        <em>{lang === "en" ? "LIVE PREVIEW" : "CANLI ÖNİZLEME"}</em>
       </header>
       <div className="solution-mini__stats">
         {ctmSummary.map((item) => (
@@ -45,7 +56,7 @@ export function CtmMiniDemo({
       {active ? (
         <>
           <SolutionTabs
-            label="CTM-ERP mini demo bölümleri"
+            label={lang === "en" ? "CTM-ERP mini demo sections" : "CTM-ERP mini demo bölümleri"}
             tabs={ctmTabs}
             activeTab={activeTab}
             onChange={(tab) => {
@@ -120,10 +131,10 @@ export function CtmMiniDemo({
                       <button
                         type="button"
                         onClick={() =>
-                          onToast("Detaylı raporlar CTM-ERP ürün demosunda sunulmaktadır.")
+                          onToast(lang === "en" ? "Detailed reports are presented in the CTM-ERP product demo." : "Detaylı raporlar CTM-ERP ürün demosunda sunulmaktadır.")
                         }
                       >
-                        Görüntüle
+                        {lang === "en" ? "View" : "Görüntüle"}
                       </button>
                     </div>
                   ))}
@@ -137,7 +148,7 @@ export function CtmMiniDemo({
             type="button"
             onClick={() => { document.getElementById('iletisim')?.scrollIntoView({ behavior: 'smooth' }); }}
           >
-            Demo talebi için tıklayınız <ArrowRight size={13} aria-hidden="true" />
+            {lang === "en" ? "Click to request a demo" : "Demo talebi için tıklayınız"} <ArrowRight size={13} aria-hidden="true" />
           </button>
         </>
       ) : (

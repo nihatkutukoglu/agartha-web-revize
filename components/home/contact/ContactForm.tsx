@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import Link from "next/link";
 import { Send } from "lucide-react";
 import { ContactField } from "./ContactField";
 import { ContactSelect } from "./ContactSelect";
-import { ContactDemoToast } from "./ContactDemoToast";
 import { ContactSuccessState } from "./ContactSuccessState";
-import { solutionOptions, requestTypeOptions } from "./contact.data";
+import { getSolutionOptions, getRequestTypeOptions } from "./contact.data";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 import { ContactFormData, ContactFormErrors, ContactFormStatus, ContactSubmissionResult } from "./contact.types";
 
 const initialFormData: ContactFormData = {
@@ -23,15 +25,17 @@ const initialFormData: ContactFormData = {
 
 // Simulated API call
 async function submitContactForm(data: ContactFormData): Promise<ContactSubmissionResult> {
+  void data;
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return { success: true };
 }
 
 export function ContactForm() {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
   const [formData, setFormData] = useState<ContactFormData>(initialFormData);
   const [errors, setErrors] = useState<ContactFormErrors>({});
   const [status, setStatus] = useState<ContactFormStatus>("idle");
-  const [showToast, setShowToast] = useState(false);
   
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -40,40 +44,40 @@ export function ContactForm() {
     let isValid = true;
 
     if (!formData.fullName.trim()) {
-      newErrors.fullName = "Ad soyad alanı zorunludur.";
+      newErrors.fullName = lang === "en" ? "Full name is required." : "Ad soyad alanı zorunludur.";
       isValid = false;
     }
 
     if (!formData.company.trim()) {
-      newErrors.company = "Kurum veya şirket bilgisi zorunludur.";
+      newErrors.company = lang === "en" ? "Company name is required." : "Kurum veya şirket bilgisi zorunludur.";
       isValid = false;
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = "Geçerli bir e-posta adresi girin.";
+      newErrors.email = lang === "en" ? "Enter a valid email address." : "Geçerli bir e-posta adresi girin.";
       isValid = false;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Geçerli bir e-posta adresi girin.";
+      newErrors.email = lang === "en" ? "Enter a valid email address." : "Geçerli bir e-posta adresi girin.";
       isValid = false;
     }
 
     if (!formData.solution) {
-      newErrors.solution = "Bir çözüm seçin.";
+      newErrors.solution = lang === "en" ? "Select a solution." : "Bir çözüm seçin.";
       isValid = false;
     }
 
     if (!formData.requestType) {
-      newErrors.requestType = "Talep türünü seçin.";
+      newErrors.requestType = lang === "en" ? "Select a request type." : "Talep türünü seçin.";
       isValid = false;
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = "Mesaj alanı zorunludur.";
+      newErrors.message = lang === "en" ? "Message field is required." : "Mesaj alanı zorunludur.";
       isValid = false;
     }
 
     if (!formData.privacyAccepted) {
-      newErrors.privacyAccepted = "Devam etmek için aydınlatma onayını işaretleyin.";
+      newErrors.privacyAccepted = lang === "en" ? "Please accept the privacy policy to continue." : "Devam etmek için aydınlatma onayını işaretleyin.";
       isValid = false;
     }
 
@@ -135,8 +139,7 @@ export function ContactForm() {
   if (status === "success") {
     return (
       <ContactSuccessState 
-        solution={formData.solution} 
-        requestType={formData.requestType}
+        formData={formData}
         onReset={handleReset} 
       />
     );
@@ -147,9 +150,15 @@ export function ContactForm() {
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-2">
           <div className="h-0.5 w-6 bg-[#A67C45]" />
-          <h3 className="text-2xl font-semibold text-[#171B21]">Projenizi konuşalım</h3>
+          <h3 className="text-2xl font-semibold text-[#171B21]">
+            {lang === "en" ? "Let's talk about your project" : "Projenizi konuşalım"}
+          </h3>
         </div>
-        <p className="text-[#171B21]/70">Formu doldurun, ilgili çözüm ekibimiz sizinle iletişime geçsin.</p>
+        <p className="text-[#171B21]/70">
+          {lang === "en" 
+            ? "Fill out the form, and our relevant solution team will contact you." 
+            : "Formu doldurun, ilgili çözüm ekibimiz sizinle iletişime geçsin."}
+        </p>
       </div>
 
       <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -171,8 +180,8 @@ export function ContactForm() {
           <ContactField
             id="fullName"
             name="fullName"
-            label="Ad Soyad"
-            placeholder="Adınız ve soyadınız"
+            label={lang === "en" ? "Full Name" : "Ad Soyad"}
+            placeholder={lang === "en" ? "Your name and surname" : "Adınız ve soyadınız"}
             autoComplete="name"
             required
             value={formData.fullName}
@@ -182,8 +191,8 @@ export function ContactForm() {
           <ContactField
             id="company"
             name="company"
-            label="Kurum / Şirket"
-            placeholder="Kurum veya şirket adı"
+            label={lang === "en" ? "Institution / Company" : "Kurum / Şirket"}
+            placeholder={lang === "en" ? "Institution or company name" : "Kurum veya şirket adı"}
             autoComplete="organization"
             required
             value={formData.company}
@@ -197,7 +206,7 @@ export function ContactForm() {
             id="email"
             name="email"
             type="email"
-            label="Kurumsal E-posta"
+            label={lang === "en" ? "Corporate Email" : "Kurumsal E-posta"}
             placeholder="ornek@kurum.com"
             autoComplete="email"
             required
@@ -209,8 +218,8 @@ export function ContactForm() {
             id="phone"
             name="phone"
             type="tel"
-            label="Telefon"
-            placeholder="Telefon numaranız"
+            label={lang === "en" ? "Phone" : "Telefon"}
+            placeholder={lang === "en" ? "Your phone number" : "Telefon numaranız"}
             autoComplete="tel"
             value={formData.phone}
             onChange={handleChange}
@@ -222,10 +231,10 @@ export function ContactForm() {
           <ContactSelect
             id="solution"
             name="solution"
-            label="İlgilendiğiniz Çözüm"
-            placeholder="Bir çözüm seçin"
+            label={lang === "en" ? "Interested Solution" : "İlgilendiğiniz Çözüm"}
+            placeholder={lang === "en" ? "Select a solution" : "Bir çözüm seçin"}
             required
-            options={solutionOptions}
+            options={getSolutionOptions(lang)}
             value={formData.solution}
             onChange={handleChange}
             error={errors.solution}
@@ -233,10 +242,10 @@ export function ContactForm() {
           <ContactSelect
             id="requestType"
             name="requestType"
-            label="Talep Türü"
-            placeholder="Talep türünü seçin"
+            label={lang === "en" ? "Request Type" : "Talep Türü"}
+            placeholder={lang === "en" ? "Select a request type" : "Talep türünü seçin"}
             required
-            options={requestTypeOptions}
+            options={getRequestTypeOptions(lang)}
             value={formData.requestType}
             onChange={handleChange}
             error={errors.requestType}
@@ -247,8 +256,8 @@ export function ContactForm() {
           id="message"
           name="message"
           as="textarea"
-          label="Mesaj"
-          placeholder="İhtiyacınızı, mevcut süreçlerinizi veya görüşmek istediğiniz konuyu kısaca anlatın."
+          label={lang === "en" ? "Message" : "Mesaj"}
+          placeholder={lang === "en" ? "Briefly explain your needs, current processes, or the topic you'd like to discuss." : "İhtiyacınızı, mevcut süreçlerinizi veya görüşmek istediğiniz konuyu kısaca anlatın."}
           required
           value={formData.message}
           onChange={handleChange}
@@ -268,19 +277,14 @@ export function ContactForm() {
               />
             </div>
             <label htmlFor="privacyAccepted" className="text-sm text-[#171B21]/80 leading-tight select-none cursor-pointer">
-              İletişim talebimin yanıtlanması amacıyla bilgilerimin işlenmesine ilişkin{" "}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowToast(true);
-                  setTimeout(() => setShowToast(false), 3000);
-                }}
+              {lang === "en" ? "I have read the " : "İletişim talebimin yanıtlanması amacıyla bilgilerimin işlenmesine ilişkin "}
+              <Link
+                href={`/${lang}/kvkk`}
                 className="font-semibold text-[#172231] underline decoration-[#172231]/30 underline-offset-2 hover:decoration-[#172231]"
               >
-                aydınlatma metnini
-              </button>{" "}
-              okudum.
+                {lang === "en" ? "privacy policy" : "aydınlatma metnini"}
+              </Link>
+              {lang === "en" ? " regarding the processing of my information." : " okudum."}
             </label>
           </div>
           {errors.privacyAccepted && (
@@ -303,27 +307,22 @@ export function ContactForm() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Talebiniz hazırlanıyor…
+                {lang === "en" ? "Preparing your request…" : "Talebiniz hazırlanıyor…"}
               </>
             ) : (
               <>
-                Talebimi Gönder
+                {lang === "en" ? "Send Request" : "Talebimi Gönder"}
                 <Send className="h-4 w-4 text-[#A67C45] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </>
             )}
           </button>
           
           <p className="text-center text-xs text-gray-500">
-            Bilgileriniz yalnızca iletişim talebinizin değerlendirilmesi amacıyla kullanılacaktır.
+            {lang === "en" ? "Your information will only be used to evaluate your contact request." : "Bilgileriniz yalnızca iletişim talebinizin değerlendirilmesi amacıyla kullanılacaktır."}
           </p>
         </div>
       </form>
 
-      <ContactDemoToast 
-        isVisible={showToast} 
-        onClose={() => setShowToast(false)} 
-        message="Aydınlatma metni son içerik aşamasında eklenecektir." 
-      />
     </div>
   );
 }

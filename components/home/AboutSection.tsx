@@ -7,9 +7,14 @@ import { AboutStory } from "./about/AboutStory";
 import { AboutCapabilities } from "./about/AboutCapabilities";
 import { AboutTimeline } from "./about/AboutTimeline";
 import { AboutCta } from "./about/AboutCta";
+import { useParams } from "next/navigation";
+import { dictionaries, Lang } from "@/data/dictionary";
 
-export function AboutSection() {
+export function AboutSection({ corporatePage = false }: { corporatePage?: boolean }) {
   const reduceMotion = useReducedMotion();
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const dict = dictionaries[lang] || dictionaries.tr;
 
   const reveal = (delay: number) => ({
     initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 15 },
@@ -33,30 +38,30 @@ export function AboutSection() {
         <div className={styles.header}>
           <div>
             <motion.div className={styles.eyebrow} {...reveal(0)}>
-              HAKKIMIZDA
+              {dict.about.eyebrow}
             </motion.div>
             <motion.h2 id="about-title" className={styles.title} {...reveal(0.1)}>
-              Teknolojiyi kurumların gerçek ihtiyaçları için geliştiriyoruz.
+              {dict.about.title}
             </motion.h2>
           </div>
           
           <div className={styles.headerRight}>
             <motion.p className={styles.description} {...reveal(0.15)}>
-              Agartha Teknoloji; kamu, sivil havacılık ve kurumsal işletmelerin kritik operasyonlarını güvenli, izlenebilir ve sürdürülebilir dijital sistemlere dönüştüren yerli bir teknoloji şirketidir.
+              {dict.about.description}
             </motion.p>
             <motion.a 
-              href="#cozumler" 
+              href={`/${lang}#cozumler`} 
               className="link" 
               style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "var(--color-navy)", fontWeight: 500 }}
               {...reveal(0.2)}
             >
-              Çözümlerimizi keşfedin <ArrowUpRight size={16} />
+              {dict.about.link} <ArrowUpRight size={16} />
             </motion.a>
           </div>
         </div>
 
         {/* 2. Visual & Story Area */}
-        <AboutStory />
+        <AboutStory corporatePage={corporatePage} />
 
         {/* 3. Capabilities Area */}
         <AboutCapabilities />

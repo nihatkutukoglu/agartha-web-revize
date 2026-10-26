@@ -1,11 +1,17 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { capabilities } from "@/data/about";
+import { getCapabilities } from "@/data/about";
 import styles from "../AboutSection.module.css";
+import { useParams } from "next/navigation";
+import { dictionaries, Lang } from "@/data/dictionary";
 
 export function AboutCapabilities() {
   const reduceMotion = useReducedMotion();
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const dict = dictionaries[lang] || dictionaries.tr;
+  const capabilities = getCapabilities(lang);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -39,7 +45,7 @@ export function AboutCapabilities() {
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.5 }}
       >
-        Bizi farklılaştıran yaklaşım
+        {dict.about.capsTitle}
       </motion.h4>
 
       <motion.div 

@@ -1,38 +1,57 @@
+"use client";
+
 import {
   Blocks,
   Building2,
-  FileCheck2,
+  FileText,
   FlaskConical,
-  Headphones,
-  ShieldCheck,
+  HeadphonesIcon,
+  Shield,
 } from "lucide-react";
-import { whyAgarthaItems } from "@/data/home";
+import { getWhyAgarthaItems } from "@/data/home";
 import { SectionReveal } from "./SectionReveal";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
-const whyIcons = {
+const iconMap = {
   flask: FlaskConical,
   building: Building2,
-  shield: ShieldCheck,
+  shield: Shield,
   blocks: Blocks,
-  file: FileCheck2,
-  headphones: Headphones,
+  file: FileText,
+  headphones: HeadphonesIcon,
 };
 
 export function WhyAgarthaSection() {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const whyAgarthaItems = getWhyAgarthaItems(lang);
+
   return (
     <section className="section why-section" id="neden-agartha">
       <div className="why-section__decor" aria-hidden="true" />
       <div className="section__inner">
-        <SectionReveal className="section-heading section-heading--on-dark">
-          <span className="section-kicker">NEDEN AGARTHA?</span>
-          <h2>Teknolojiyi yalnızca geliştirmiyor, kurumunuza uyarlıyoruz.</h2>
+        <SectionReveal className="section-heading section-heading--wide section-heading--on-dark">
+          <span className="section-kicker">
+            {lang === "en" ? "WHY AGARTHA?" : "NEDEN AGARTHA?"}
+          </span>
+          <h2>
+            {lang === "en"
+              ? "Strategic technology partnership."
+              : "Stratejik teknoloji ortaklığı."}
+          </h2>
+          <p>
+            {lang === "en"
+              ? "We manage your operational transformation not only with software but with our engineering power and sector experience."
+              : "Operasyonel dönüşümünüzü sadece yazılımla değil, mühendislik gücümüz ve sektör tecrübemizle yönetiyoruz."}
+          </p>
         </SectionReveal>
         <div className="why-grid">
           {whyAgarthaItems.map((item, index) => {
-            const Icon = whyIcons[item.icon];
+            const Icon = iconMap[item.icon as keyof typeof iconMap];
             return (
               <SectionReveal 
-                className={`why-card ${index === 0 || index === 4 ? "why-card--span-2" : ""}`} 
+                className="why-card" 
                 delay={(index % 3) * 0.06} 
                 key={item.title}
               >

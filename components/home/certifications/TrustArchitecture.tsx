@@ -4,28 +4,33 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { BrandLogo } from "@/components/shared/BrandLogo";
 import {
-  certificates,
+  getCertificates,
   type CertificateId,
 } from "@/data/certifications";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
 export function TrustArchitecture() {
   const [activeNode, setActiveNode] = useState<CertificateId | null>(null);
   const reduceMotion = useReducedMotion();
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const certificatesData = getCertificates(lang);
 
   return (
     <div className="trust-architecture">
       <div className="trust-architecture__label">
         <span />
-        Agartha Güven Mimarisi
+        {lang === "en" ? "Agartha Trust Architecture" : "Agartha Güven Mimarisi"}
       </div>
 
       <div className="trust-architecture__canvas">
         <div className="trust-architecture__core">
           <BrandLogo />
-          <small>Güven merkezi</small>
+          <small>{lang === "en" ? "Trust center" : "Güven merkezi"}</small>
         </div>
 
-        {certificates.map((certificate, index) => (
+        {certificatesData.map((certificate, index) => (
           <motion.span
             aria-hidden="true"
             className={`trust-architecture__line trust-architecture__line--${index + 1}${
@@ -43,7 +48,7 @@ export function TrustArchitecture() {
           />
         ))}
 
-        {certificates.map((certificate, index) => (
+        {certificatesData.map((certificate, index) => (
           <button
             className={`trust-architecture__node trust-architecture__node--${index + 1}${
               activeNode === certificate.id ? " is-active" : ""

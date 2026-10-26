@@ -5,7 +5,7 @@ export type CtmPanelId =
   | "organizations"
   | "reports";
 
-export type AuditStatus = "Planlandı" | "İncelemede" | "Onaylandı";
+export type AuditStatus = "Planlandı" | "İncelemede" | "Onaylandı" | "Planned" | "Under Review" | "Approved";
 
 export interface AuditRecord {
   id: string;
@@ -17,12 +17,43 @@ export interface AuditRecord {
   scope: string;
 }
 
-export const ctmNavigation: Array<{
+export const getCtmNavigation = (lang: string): Array<{
   id: CtmPanelId;
   label: string;
   eyebrow: string;
   title: string;
-}> = [
+}> => lang === "en" ? [
+  {
+    id: "overview",
+    label: "Overview",
+    eyebrow: "MANAGEMENT PANEL",
+    title: "Operations Summary",
+  },
+  {
+    id: "audits",
+    label: "Audits",
+    eyebrow: "OPERATIONS MANAGEMENT",
+    title: "Audit Processes",
+  },
+  {
+    id: "licenses",
+    label: "Licenses",
+    eyebrow: "AUTHORIZATION",
+    title: "License Management",
+  },
+  {
+    id: "organizations",
+    label: "Organizations",
+    eyebrow: "INSTITUTION MANAGEMENT",
+    title: "Organization Inventory",
+  },
+  {
+    id: "reports",
+    label: "Reports",
+    eyebrow: "ANALYTICS CENTER",
+    title: "Reporting",
+  },
+] : [
   {
     id: "overview",
     label: "Genel Bakış",
@@ -55,20 +86,66 @@ export const ctmNavigation: Array<{
   },
 ];
 
-export const overviewStats = [
+export const getOverviewStats = (lang: string) => lang === "en" ? [
+  { label: "Open Audit", value: "24", trend: "+4 this month" },
+  { label: "Active License", value: "186", trend: "96% valid" },
+  { label: "Registered Org", value: "42", trend: "6 cities" },
+  { label: "Open Finding", value: "11", trend: "3 critical" },
+] : [
   { label: "Açık Denetim", value: "24", trend: "+4 bu ay" },
   { label: "Aktif Lisans", value: "186", trend: "%96 geçerli" },
   { label: "Kayıtlı Kuruluş", value: "42", trend: "6 şehir" },
   { label: "Açık Bulgu", value: "11", trend: "3 kritik" },
 ];
 
-export const overviewActivities = [
+export const getOverviewActivities = (lang: string) => lang === "en" ? [
+  { action: "License renewal approved", time: "12 mins ago" },
+  { action: "New audit planned", time: "48 mins ago" },
+  { action: "Evidence uploaded for finding", time: "2 hours ago" },
+] : [
   { action: "Lisans yenileme onaylandı", time: "12 dk önce" },
   { action: "Yeni denetim planlandı", time: "48 dk önce" },
   { action: "Bulgu için kanıt yüklendi", time: "2 saat önce" },
 ];
 
-export const auditRecords: AuditRecord[] = [
+export const getAuditRecords = (lang: string): AuditRecord[] => lang === "en" ? [
+  {
+    id: "DNT-2048",
+    name: "Flight Ops Audit",
+    organization: "Anadolu Aviation Inc.",
+    date: "Jul 18, 2026",
+    status: "Under Review",
+    owner: "Selin Aksoy",
+    scope: "Flight safety, crew compliance and operations records",
+  },
+  {
+    id: "DNT-2047",
+    name: "Maintenance Org Check",
+    organization: "Blue Tech Ltd.",
+    date: "Jul 16, 2026",
+    status: "Approved",
+    owner: "Burak Kaya",
+    scope: "Maintenance procedures, facility competence and personnel records",
+  },
+  {
+    id: "DNT-2046",
+    name: "Ground Handling Compliance",
+    organization: "Terminal Ops Inc.",
+    date: "Jul 14, 2026",
+    status: "Planned",
+    owner: "Ece Yalin",
+    scope: "Ground ops, equipment safety and training records",
+  },
+  {
+    id: "DNT-2045",
+    name: "Training Org Surveillance",
+    organization: "Compass Flight Academy",
+    date: "Jul 11, 2026",
+    status: "Under Review",
+    owner: "Mert Ozkan",
+    scope: "Training curriculum, simulator records and instructor competence",
+  },
+] : [
   {
     id: "DNT-2048",
     name: "Uçuş Operasyon Denetimi",
@@ -107,7 +184,29 @@ export const auditRecords: AuditRecord[] = [
   },
 ];
 
-export const licenseRecords = [
+export const getLicenseRecords = (lang: string) => lang === "en" ? [
+  {
+    id: "LSS-1182",
+    type: "Commercial Pilot License",
+    holder: "Deniz Arslan",
+    expiry: "Dec 28, 2026",
+    status: "Valid",
+  },
+  {
+    id: "LSS-1174",
+    type: "Maint. Org Authorization",
+    holder: "Blue Tech Ltd.",
+    expiry: "Oct 15, 2026",
+    status: "In Renewal",
+  },
+  {
+    id: "LSS-1159",
+    type: "Training Org Certificate",
+    holder: "Compass Flight Academy",
+    expiry: "Feb 02, 2027",
+    status: "Valid",
+  },
+] : [
   {
     id: "LSS-1182",
     type: "Ticari Pilot Lisansı",
@@ -131,7 +230,36 @@ export const licenseRecords = [
   },
 ];
 
-export const organizationRecords = [
+export const getOrganizationRecords = (lang: string) => lang === "en" ? [
+  {
+    id: "KRM-041",
+    name: "Anadolu Aviation Inc.",
+    city: "Ankara",
+    type: "Air Operator",
+    licenses: 12,
+  },
+  {
+    id: "KRM-038",
+    name: "Blue Tech Ltd.",
+    city: "Istanbul",
+    type: "Maintenance Org",
+    licenses: 8,
+  },
+  {
+    id: "KRM-032",
+    name: "Terminal Ops Inc.",
+    city: "Izmir",
+    type: "Ground Handling",
+    licenses: 6,
+  },
+  {
+    id: "KRM-029",
+    name: "Compass Flight Academy",
+    city: "Eskisehir",
+    type: "Training Org",
+    licenses: 5,
+  },
+] : [
   {
     id: "KRM-041",
     name: "Anadolu Havacılık A.Ş.",
@@ -162,7 +290,28 @@ export const organizationRecords = [
   },
 ];
 
-export const reportRecords = [
+export const getReportRecords = (lang: string) => lang === "en" ? [
+  {
+    title: "Monthly Audit Summary",
+    description: "Executive summary of planned and completed audits.",
+    period: "July 2026",
+  },
+  {
+    title: "License Status Report",
+    description: "Up-to-date view of validity and renewal calendars.",
+    period: "July 2026",
+  },
+  {
+    title: "Organization Risk Analysis",
+    description: "Organization-based finding density and risk distribution.",
+    period: "Q2",
+  },
+  {
+    title: "Operations Performance",
+    description: "Process completion times and team performance indicators.",
+    period: "2026 YTD",
+  },
+] : [
   {
     title: "Aylık Denetim Özeti",
     description: "Planlanan ve tamamlanan denetimlerin yönetici özeti.",

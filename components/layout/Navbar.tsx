@@ -1,16 +1,33 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useParams, usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Menu } from "lucide-react";
 import { BrandLogo } from "@/components/shared/BrandLogo";
-import { navigationItems } from "@/data/navigation";
+import { getNavigationItems } from "@/data/navigation";
+import { dictionaries, Lang } from "@/data/dictionary";
 import { MobileMenu } from "./MobileMenu";
+import { SocialLinks } from "@/components/shared/SocialLinks";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  const params = useParams();
+  const pathname = usePathname();
+  const lang = (params?.lang as Lang) || "tr";
+  const dict = dictionaries[lang] || dictionaries.tr;
+  const navigationItems = getNavigationItems(lang);
+
+  const getSwitchUrl = (newLang: string) => {
+    if (!pathname || pathname === "/") return `/${newLang}`;
+    if (pathname.startsWith(`/${lang}`)) {
+      return pathname.replace(`/${lang}`, `/${newLang}`);
+    }
+    return `/${newLang}${pathname}`;
+  };
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 18);
@@ -36,9 +53,9 @@ export function Navbar() {
         transition={{ duration: reduceMotion ? 0.2 : 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="navbar__inner">
-          <a className="navbar__brand" href="/" aria-label="Agartha Teknoloji ana sayfa">
+          <Link className="navbar__brand" href={`/${lang}`} aria-label="Agartha Teknoloji ana sayfa">
             <BrandLogo />
-          </a>
+          </Link>
 
           <nav className="navbar__nav" aria-label="Ana navigasyon">
             {navigationItems.map((item) => (
@@ -53,13 +70,16 @@ export function Navbar() {
           </nav>
 
           <div className="navbar__actions">
-            <div className="language-switch language-switch--desktop" aria-label="Dil seçimi">
-              <button className="is-active" type="button">TR</button>
-              <span>/</span>
-              <button type="button">EN</button>
+            <div className="navbar__socials">
+              <SocialLinks lang={lang} variant="header" showTitle={false} />
             </div>
-            <a className="button button--primary navbar__cta" href="/#iletisim">
-              Demo Talep Edin
+            <div className="language-switch language-switch--desktop" aria-label="Dil seçimi">
+              <button className={lang === "tr" ? "is-active" : ""} type="button" onClick={() => { window.location.href = getSwitchUrl("tr") }}>TR</button>
+              <span>/</span>
+              <button className={lang === "en" ? "is-active" : ""} type="button" onClick={() => { window.location.href = getSwitchUrl("en") }}>EN</button>
+            </div>
+            <a className="button button--primary navbar__cta" href={`/${lang}#iletisim`}>
+              {dict.nav.demo}
               <ArrowUpRight size={16} aria-hidden="true" />
             </a>
             <button
@@ -78,6 +98,7 @@ export function Navbar() {
       <MobileMenu
         isOpen={isMenuOpen}
         items={navigationItems}
+        lang={lang}
         onClose={() => setIsMenuOpen(false)}
       />
     </>

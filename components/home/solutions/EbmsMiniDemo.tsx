@@ -2,19 +2,27 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Cog, Wrench, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import {
-  ebmsAssets,
-  ebmsCalendar,
-  ebmsTabs,
-  ebmsWorkOrders,
+  getEbmsAssets,
+  getEbmsCalendar,
+  getEbmsTabs,
+  getEbmsWorkOrders,
   type EbmsDemoTab,
 } from "@/data/solutionDemoData";
 import { SolutionTabs } from "./SolutionTabs";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
 interface EbmsMiniDemoProps {
   active: boolean;
 }
 
 export function EbmsMiniDemo({ active }: EbmsMiniDemoProps) {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const ebmsAssets = getEbmsAssets(lang);
+  const ebmsCalendar = getEbmsCalendar(lang);
+  const ebmsTabs = getEbmsTabs(lang);
+  const ebmsWorkOrders = getEbmsWorkOrders(lang);
   const [activeTab, setActiveTab] = useState<EbmsDemoTab>("assets");
   const [selectedAssetId, setSelectedAssetId] = useState<number | null>(null);
   const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);
@@ -24,18 +32,18 @@ export function EbmsMiniDemo({ active }: EbmsMiniDemoProps) {
   return (
     <div className="solution-mini solution-mini--ebms" data-testid="ebms-mini-demo">
       <header className="solution-mini__bar">
-        <span><Cog size={14} aria-hidden="true" /> Yalın EBMS</span>
-        <em>BAKIM MERKEZİ</em>
+        <span><Cog size={14} aria-hidden="true" /> {lang === "en" ? "Lean EBMS" : "Yalın EBMS"}</span>
+        <em>{lang === "en" ? "MAINTENANCE CENTER" : "BAKIM MERKEZİ"}</em>
       </header>
       <div className="ebms-health">
-        <span><i /><strong>24</strong><small>Aktif varlık</small></span>
-        <span><i /><strong>3</strong><small>Planlı bakım</small></span>
-        <span><i /><strong>7</strong><small>Açık iş emri</small></span>
+        <span><i /><strong>24</strong><small>{lang === "en" ? "Active asset" : "Aktif varlık"}</small></span>
+        <span><i /><strong>3</strong><small>{lang === "en" ? "Planned maint." : "Planlı bakım"}</small></span>
+        <span><i /><strong>7</strong><small>{lang === "en" ? "Open work order" : "Açık iş emri"}</small></span>
       </div>
       {active ? (
         <>
           <SolutionTabs
-            label="Yalın EBMS mini demo bölümleri"
+            label={lang === "en" ? "Lean EBMS mini demo sections" : "Yalın EBMS mini demo bölümleri"}
             tabs={ebmsTabs}
             activeTab={activeTab}
             onChange={(tab) => {
@@ -64,7 +72,7 @@ export function EbmsMiniDemo({ active }: EbmsMiniDemoProps) {
                       type="button"
                       onClick={() => setSelectedAssetId(asset.id)}
                     >
-                      <span><strong>{asset.name}</strong><small>Varlık 0{asset.id}</small></span>
+                      <span><strong>{asset.name}</strong><small>{lang === "en" ? "Asset" : "Varlık"} 0{asset.id}</small></span>
                       <em>{asset.status}</em>
                     </button>
                   ))}
@@ -77,10 +85,10 @@ export function EbmsMiniDemo({ active }: EbmsMiniDemoProps) {
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                       >
-                        <span><small>Son bakım</small><strong>{selectedAsset.lastMaintenance}</strong></span>
-                        <span><small>Sonraki bakım</small><strong>{selectedAsset.nextMaintenance}</strong></span>
-                        <span><small>Sorumlu ekip</small><strong>{selectedAsset.team}</strong></span>
-                        <span><small>Öncelik / Durum</small><strong>{selectedAsset.priority} · {selectedAsset.status}</strong></span>
+                        <span><small>{lang === "en" ? "Last maintenance" : "Son bakım"}</small><strong>{selectedAsset.lastMaintenance}</strong></span>
+                        <span><small>{lang === "en" ? "Next maintenance" : "Sonraki bakım"}</small><strong>{selectedAsset.nextMaintenance}</strong></span>
+                        <span><small>{lang === "en" ? "Responsible team" : "Sorumlu ekip"}</small><strong>{selectedAsset.team}</strong></span>
+                        <span><small>{lang === "en" ? "Priority / Status" : "Öncelik / Durum"}</small><strong>{selectedAsset.priority} · {selectedAsset.status}</strong></span>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -117,20 +125,20 @@ export function EbmsMiniDemo({ active }: EbmsMiniDemoProps) {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                     >
-                      {selectedOrder.title} iş emri {selectedOrder.owner} sorumluluğunda izleniyor.
+                      {selectedOrder.title} {lang === "en" ? "work order is being tracked under the responsibility of" : "iş emri"} {selectedOrder.owner} {lang === "en" ? "" : "sorumluluğunda izleniyor."}
                     </motion.p>
                   )}
                 </div>
               )}
             </motion.div>
           </AnimatePresence>
-          <p className="solution-mini__tagline">Bakımı arıza oluşmadan önce yönetin.</p>
+          <p className="solution-mini__tagline">{lang === "en" ? "Manage maintenance before failure occurs." : "Bakımı arıza oluşmadan önce yönetin."}</p>
           <button
             className="solution-mini__detail-link"
             type="button"
             onClick={() => { document.getElementById('iletisim')?.scrollIntoView({ behavior: 'smooth' }); }}
           >
-            Demo talebi için tıklayınız <ArrowRight size={13} aria-hidden="true" />
+            {lang === "en" ? "Click to request a demo" : "Demo talebi için tıklayınız"} <ArrowRight size={13} aria-hidden="true" />
           </button>
         </>
       ) : (

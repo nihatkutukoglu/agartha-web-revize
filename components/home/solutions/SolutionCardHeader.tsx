@@ -38,7 +38,7 @@ export function SolutionCardHeader({
             onToggle();
             const subject = encodeURIComponent(`${solution.name} Hakkında Bilgi ve Demo Talebi`);
             const body = encodeURIComponent(`Merhaba,\n\nBen ${solution.name} sistemi hakkında detaylı bilgi almak ve demoya ulaşmak istiyorum.\n\nİyi çalışmalar.`);
-            window.location.href = `mailto:info@agarthateknoloji.com?cc=satis@agarthateknoloji.com&subject=${subject}&body=${body}`;
+            window.location.href = `mailto:bilgi@agarthateknoloji.com.tr?subject=${subject}&body=${body}`;
           }}
         >
           {active ? "Çözümü Kapat" : "Çözümü İncele"}

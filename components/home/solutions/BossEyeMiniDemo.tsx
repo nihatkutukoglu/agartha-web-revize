@@ -2,18 +2,26 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Activity, BellRing, ListChecks, ArrowRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
-  bossDemoData,
-  bossStatusFilters,
-  bossTimeFilters,
+  getBossDemoData,
+  getBossStatusFilters,
+  getBossTimeFilters,
   type BossStatusFilter,
   type BossTimeRange,
 } from "@/data/solutionDemoData";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
 interface BossEyeMiniDemoProps {
   active: boolean;
 }
 
 export function BossEyeMiniDemo({ active }: BossEyeMiniDemoProps) {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const bossTimeFilters = getBossTimeFilters(lang);
+  const bossStatusFilters = getBossStatusFilters(lang);
+  const bossDemoData = getBossDemoData(lang);
+  
   const [timeRange, setTimeRange] = useState<BossTimeRange>("today");
   const [statusFilter, setStatusFilter] = useState<BossStatusFilter>("all");
   const currentData = bossDemoData[timeRange];
@@ -32,10 +40,10 @@ export function BossEyeMiniDemo({ active }: BossEyeMiniDemoProps) {
     <div className="solution-mini solution-mini--boss" data-testid="bosseye-mini-demo">
       <header className="solution-mini__bar">
         <span><Activity size={14} aria-hidden="true" /> BossEYE Live</span>
-        <em>OPERASYON</em>
+        <em>{lang === "en" ? "OPERATION" : "OPERASYON"}</em>
       </header>
       {active && (
-        <div className="boss-time-filter" aria-label="BossEYE zaman filtresi">
+        <div className="boss-time-filter" aria-label={lang === "en" ? "BossEYE time filter" : "BossEYE zaman filtresi"}>
           {bossTimeFilters.map((filter) => (
             <button
               className={timeRange === filter.id ? "is-active" : ""}
@@ -63,7 +71,7 @@ export function BossEyeMiniDemo({ active }: BossEyeMiniDemoProps) {
         })}
       </motion.div>
       <div className="boss-mini-chart">
-        <svg viewBox="0 0 380 110" role="img" aria-label="BossEYE operasyon eğilimi">
+        <svg viewBox="0 0 380 110" role="img" aria-label={lang === "en" ? "BossEYE operation trend" : "BossEYE operasyon eğilimi"}>
           <path d="M0 92H380M0 56H380M0 20H380" />
           <motion.polyline
             key={timeRange}
@@ -76,7 +84,7 @@ export function BossEyeMiniDemo({ active }: BossEyeMiniDemoProps) {
       </div>
       {active ? (
         <>
-          <div className="boss-status-filter" aria-label="BossEYE durum filtresi">
+          <div className="boss-status-filter" aria-label={lang === "en" ? "BossEYE status filter" : "BossEYE durum filtresi"}>
             {bossStatusFilters.map((filter) => (
               <button
                 className={statusFilter === filter.id ? "is-active" : ""}
@@ -106,7 +114,7 @@ export function BossEyeMiniDemo({ active }: BossEyeMiniDemoProps) {
             type="button"
             onClick={() => { document.getElementById('iletisim')?.scrollIntoView({ behavior: 'smooth' }); }}
           >
-            Demo talebi için tıklayınız <ArrowRight size={13} aria-hidden="true" />
+            {lang === "en" ? "Click to request a demo" : "Demo talebi için tıklayınız"} <ArrowRight size={13} aria-hidden="true" />
           </button>
         </>
       ) : (

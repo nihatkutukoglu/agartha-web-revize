@@ -1,8 +1,11 @@
 "use client";
 
 import { MapPin, Mail, Phone, MessageSquare, Check, Clock } from "lucide-react";
-import { contactInfo, trustBadges } from "./contact.data";
+import { getContactInfo, getTrustBadges } from "./contact.data";
 import { motion } from "framer-motion";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
+import { SocialLinks } from "@/components/shared/SocialLinks";
 
 const iconMap: Record<string, React.ElementType> = {
   MapPin,
@@ -13,22 +16,26 @@ const iconMap: Record<string, React.ElementType> = {
 };
 
 export function ContactInformation() {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
   return (
     <div className="flex flex-col h-full text-[#F7F6F2]">
       <div className="mb-10 lg:mb-16">
         <span className="mb-4 inline-block text-xs font-bold tracking-widest text-[#A67C45]">
-          İLETİŞİM
+          {lang === "en" ? "CONTACT" : "İLETİŞİM"}
         </span>
         <h2 className="mb-4 text-3xl md:text-4xl font-semibold leading-tight text-white">
-          Kurumunuzun dijital dönüşümünü birlikte planlayalım.
+          {lang === "en" ? "Let's plan your institution's digital transformation together." : "Kurumunuzun dijital dönüşümünü birlikte planlayalım."}
         </h2>
         <p className="text-[#F7F6F2]/70 text-base md:text-lg max-w-md">
-          İhtiyaçlarınızı, operasyonel süreçlerinizi ve hedeflerinizi dinleyelim; kurumunuza uygun çözüm mimarisini birlikte oluşturalım.
+          {lang === "en"
+            ? "Let us listen to your needs, operational processes, and goals; let's create the right solution architecture for your institution together."
+            : "İhtiyaçlarınızı, operasyonel süreçlerinizi ve hedeflerinizi dinleyelim; kurumunuza uygun çözüm mimarisini birlikte oluşturalım."}
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-8 mb-12">
-        {contactInfo.map((info, idx) => {
+        {getContactInfo(lang).map((info, idx) => {
           const Icon = iconMap[info.icon];
           return (
             <motion.div 
@@ -44,16 +51,31 @@ export function ContactInformation() {
               </div>
               <div>
                 <h3 className="mb-1 text-sm font-semibold text-white">{info.title}</h3>
-                <p className="text-sm text-[#F7F6F2]/70 leading-relaxed">{info.description}</p>
+                {"href" in info ? (
+                  <a
+                    className="text-sm text-[#F7F6F2]/70 leading-relaxed transition-colors hover:text-[#C89B5C]"
+                    href={info.href}
+                    rel={info.href.startsWith("http") ? "noreferrer" : undefined}
+                    target={info.href.startsWith("http") ? "_blank" : undefined}
+                  >
+                    {info.description}
+                  </a>
+                ) : (
+                  <p className="text-sm text-[#F7F6F2]/70 leading-relaxed">{info.description}</p>
+                )}
               </div>
             </motion.div>
           );
         })}
       </div>
 
+      <div className="mb-10">
+        <SocialLinks lang={lang} variant="dark" />
+      </div>
+
       <div className="mt-auto pt-8 border-t border-white/10">
         <ul className="flex flex-col gap-4">
-          {trustBadges.map((badge, idx) => (
+          {getTrustBadges(lang).map((badge, idx) => (
             <motion.li 
               key={idx}
               initial={{ opacity: 0, x: -10 }}

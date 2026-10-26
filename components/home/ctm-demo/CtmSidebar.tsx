@@ -5,7 +5,9 @@ import {
   ClipboardCheck,
   LayoutDashboard,
 } from "lucide-react";
-import { ctmNavigation, type CtmPanelId } from "@/data/ctmDemoData";
+import { getCtmNavigation, type CtmPanelId } from "@/data/ctmDemoData";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
 const icons = {
   overview: LayoutDashboard,
@@ -21,6 +23,9 @@ interface CtmSidebarProps {
 }
 
 export function CtmSidebar({ activePanel, onChange }: CtmSidebarProps) {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const ctmNavigation = getCtmNavigation(lang);
   return (
     <aside className="ctm-demo__sidebar" aria-label="CTM-ERP modülleri">
       <span className="ctm-demo__brand" aria-label="CTM-ERP">

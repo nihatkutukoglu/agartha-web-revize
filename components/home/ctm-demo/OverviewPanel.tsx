@@ -1,9 +1,15 @@
 import { Activity, Building2, ClipboardCheck, ShieldCheck } from "lucide-react";
-import { overviewActivities, overviewStats } from "@/data/ctmDemoData";
+import { getOverviewActivities, getOverviewStats } from "@/data/ctmDemoData";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
 const icons = [ClipboardCheck, ShieldCheck, Building2, Activity];
 
 export function OverviewPanel() {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const overviewStats = getOverviewStats(lang);
+  const overviewActivities = getOverviewActivities(lang);
   return (
     <div className="ctm-panel" data-testid="ctm-panel-overview">
       <div className="ctm-stat-grid">

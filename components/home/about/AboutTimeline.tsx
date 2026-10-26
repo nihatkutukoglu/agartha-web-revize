@@ -1,17 +1,23 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { timelineEvents } from "@/data/about";
+import { getTimelineEvents } from "@/data/about";
 import styles from "../AboutSection.module.css";
-
-const metrics = [
-  { value: "50+", label: "Kurumsal İş Ortağı" },
-  { value: "8.000+", label: "Aktif Kullanıcı" },
-  { value: "4", label: "Ülkede Hizmet" },
-];
+import { useParams } from "next/navigation";
+import { dictionaries, Lang } from "@/data/dictionary";
 
 export function AboutTimeline() {
   const reduceMotion = useReducedMotion();
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const dict = dictionaries[lang] || dictionaries.tr;
+  const timelineEvents = getTimelineEvents(lang);
+
+  const metrics = [
+    { value: "50+", label: dict.hero.metric1 },
+    { value: "8.000+", label: dict.hero.metric2 },
+    { value: "4", label: dict.hero.metric3 },
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },

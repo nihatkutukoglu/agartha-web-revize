@@ -1,10 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { 
-  FileText, Users, ClipboardList, AlertCircle, 
-  BarChart3, PieChart, ShieldCheck, CheckCircle2, Plane
+  FileText, Users, ClipboardList, AlertCircle,
+  BarChart3, PieChart, CheckCircle2, Plane
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 interface CaseStudyVisualProps {
   problems?: string[];
@@ -98,19 +100,19 @@ export function CaseStudyVisual({ problems = [], results = [] }: CaseStudyVisual
           </svg>
 
           {/* Central Processing Node */}
-          <div className="relative z-10 w-28 h-28 rounded-full bg-[#f9f8f4] border border-[#e8dfd1] shadow-[0_15px_40px_rgba(182,149,98,0.15)] flex items-center justify-center">
+          <div className="case-study-visual__hub-badge">
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white to-[#f0ede4]" />
             <motion.div 
                animate={{ rotate: 360 }} 
                transition={{ repeat: Infinity, duration: 15, ease: "linear" }}
-               className="absolute inset-1 rounded-full border border-dashed border-[#b69562] opacity-60"
+               className="case-study-visual__hub-orbit case-study-visual__hub-orbit--outer"
             />
             <motion.div 
                animate={{ rotate: -360 }} 
                transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-               className="absolute inset-3.5 rounded-full border border-[#151b23] opacity-15"
+               className="case-study-visual__hub-orbit case-study-visual__hub-orbit--inner"
             />
-            <ShieldCheck className="relative z-10 text-[#151b23]" size={40} strokeWidth={1.5} />
+            <Image className="case-study-visual__hub-image" src="/images/brands/ctm-erp-center-badge.png" alt="CTM-ERP dönüşüm merkezi rozeti" width={953} height={969} sizes="(max-width: 1024px) 0px, 132px" />
           </div>
         </div>
 
@@ -193,7 +195,15 @@ export function CaseStudyVisual({ problems = [], results = [] }: CaseStudyVisual
   );
 }
 
-function Node({ icon: Icon, delay, top, left, iconColor = "text-[#151b23]" }: any) {
+interface NodeProps {
+  icon: LucideIcon;
+  delay: number;
+  top: string;
+  left: string;
+  iconColor?: string;
+}
+
+function Node({ icon: Icon, delay, top, left, iconColor = "text-[#151b23]" }: NodeProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -213,7 +223,14 @@ function Node({ icon: Icon, delay, top, left, iconColor = "text-[#151b23]" }: an
   );
 }
 
-function TextNode({ text, delay, top, left }: any) {
+interface TextNodeProps {
+  text: string;
+  delay: number;
+  top: string;
+  left: string;
+}
+
+function TextNode({ text, delay, top, left }: TextNodeProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}

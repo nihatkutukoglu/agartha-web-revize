@@ -2,12 +2,18 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 import styles from "../AboutSection.module.css";
+import { useParams } from "next/navigation";
+import { dictionaries, Lang } from "@/data/dictionary";
 
-export function AboutStory() {
+export function AboutStory({ corporatePage = false }: { corporatePage?: boolean }) {
   const reduceMotion = useReducedMotion();
   const [imgError, setImgError] = useState(false);
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const dict = dictionaries[lang] || dictionaries.tr;
 
   const reveal = (delay: number) => ({
     initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 },
@@ -21,14 +27,19 @@ export function AboutStory() {
   });
 
   return (
-    <div className={styles.storyContainer}>
-      <motion.div className={styles.visualWrapper} {...reveal(0.1)}>
+    <div className={`${styles.storyContainer} ${corporatePage ? styles.storyContainerCorporate : ""}`}>
+      <motion.div className={`${styles.visualWrapper} ${corporatePage ? styles.visualWrapperCorporate : ""}`} {...reveal(0.1)}>
         {!imgError ? (
-          <img
-            src="/agartha-about-office.png"
-            alt="Agartha Teknoloji ekibinin kurumsal yazılım çözümü üzerinde çalıştığı modern ofis ortamı"
+          <Image
+            src={corporatePage ? "/agartha-tanitim-foto.png" : "/agartha-about-office.png"}
+            alt={corporatePage ? "Modern kurumsal yapıların yer aldığı mimari yerleşke" : "Agartha Teknoloji ekibinin kurumsal yazılım çözümü üzerinde çalıştığı modern ofis ortamı"}
             className={styles.image}
             onError={() => setImgError(true)}
+            width={corporatePage ? 1916 : 1536}
+            height={corporatePage ? 821 : 1024}
+            sizes={corporatePage ? "(max-width: 768px) calc(100vw - 40px), (max-width: 1440px) calc(100vw - 80px), 1360px" : "(max-width: 1024px) calc(100vw - 40px), 54vw"}
+            quality={92}
+            unoptimized
           />
         ) : (
           <div className={styles.placeholder} aria-hidden="true">
@@ -36,38 +47,38 @@ export function AboutStory() {
           </div>
         )}
         
-        <div className={styles.infoCard}>
+        <div className={`${styles.infoCard} ${corporatePage ? styles.infoCardCorporate : ""}`}>
           <ShieldCheck className={styles.infoCardIcon} size={24} aria-hidden="true" />
-          <h4 className={styles.infoCardTitle}>Yerli Ar-Ge, sürdürülebilir teknoloji</h4>
+          <h4 className={styles.infoCardTitle}>{dict.aboutStory.cardTitle}</h4>
           <p className={styles.infoCardText}>
-            Kurumların ihtiyaçlarına uyarlanan güvenli ve ölçeklenebilir sistemler.
+            {dict.aboutStory.cardText}
           </p>
         </div>
       </motion.div>
 
       <div className={styles.storyContent}>
         <motion.div className={styles.storyEyebrow} {...reveal(0.2)}>
-          2015&apos;TEN BU YANA
+          {dict.aboutStory.eyebrow}
         </motion.div>
         
         <motion.h3 className={styles.storyTitle} {...reveal(0.25)}>
-          Karmaşık operasyonları anlaşılır ve yönetilebilir sistemlere dönüştürüyoruz.
+          {dict.aboutStory.title}
         </motion.h3>
         
         <motion.p className={styles.storyParagraph} {...reveal(0.3)}>
-          Agartha Teknoloji, kurumların yalnızca yazılım ihtiyacına değil; operasyonel süreçlerine, regülasyonlarına ve uzun vadeli dönüşüm hedeflerine odaklanır.
+          {dict.aboutStory.p1}
         </motion.p>
         
         <motion.p className={styles.storyParagraph} {...reveal(0.35)}>
-          Geliştirdiğimiz çözümlerle verileri tek merkezde topluyor, manuel iş akışlarını dijitalleştiriyor ve karar süreçlerini daha izlenebilir hâle getiriyoruz.
+          {dict.aboutStory.p2}
         </motion.p>
         
         <motion.p className={styles.storyParagraph} {...reveal(0.4)}>
-          Sivil havacılıktan bakım ve varlık yönetimine, kurumsal operasyonlardan yeni nesil enerji çözümlerine kadar farklı alanlarda modüler ürünler geliştiriyoruz.
+          {dict.aboutStory.p3}
         </motion.p>
         
         <motion.div className={styles.storySignature} {...reveal(0.5)}>
-          Güvenilir teknoloji. Sürdürülebilir dönüşüm.
+          {dict.aboutStory.signature}
         </motion.div>
       </div>
     </div>

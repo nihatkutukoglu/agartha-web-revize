@@ -1,9 +1,11 @@
 import { ClipboardCheck, Clock3, FileCheck2 } from "lucide-react";
 import {
-  auditRecords,
+  getAuditRecords,
   type AuditRecord,
   type AuditStatus,
 } from "@/data/ctmDemoData";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
 type AuditFilter = "Tümü" | AuditStatus;
 
@@ -13,15 +15,19 @@ interface AuditsPanelProps {
   onSelect: (audit: AuditRecord) => void;
 }
 
-const filters: AuditFilter[] = ["Tümü", "Planlandı", "İncelemede", "Onaylandı"];
-
 export function AuditsPanel({
   filter,
   onFilterChange,
   onSelect,
 }: AuditsPanelProps) {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const auditRecords = getAuditRecords(lang);
+  
+  const filters: AuditFilter[] = lang === "en" ? ["All", "Planned", "Under Review", "Approved"] : ["Tümü", "Planlandı", "İncelemede", "Onaylandı"];
+
   const filtered =
-    filter === "Tümü"
+    filter === "Tümü" || filter === "All"
       ? auditRecords
       : auditRecords.filter((audit) => audit.status === filter);
 
@@ -30,19 +36,19 @@ export function AuditsPanel({
       <div className="ctm-audit-summary">
         <article>
           <ClipboardCheck size={16} aria-hidden="true" />
-          <span><small>Açık Denetim</small><strong>24</strong></span>
+          <span><small>{lang === "en" ? "Open Audit" : "Açık Denetim"}</small><strong>24</strong></span>
         </article>
         <article>
           <Clock3 size={16} aria-hidden="true" />
-          <span><small>İncelemede</small><strong>9</strong></span>
+          <span><small>{lang === "en" ? "Under Review" : "İncelemede"}</small><strong>9</strong></span>
         </article>
         <article>
           <FileCheck2 size={16} aria-hidden="true" />
-          <span><small>Bu Ay Tamamlanan</small><strong>18</strong></span>
+          <span><small>{lang === "en" ? "Completed This Month" : "Bu Ay Tamamlanan"}</small><strong>18</strong></span>
         </article>
       </div>
 
-      <div className="ctm-filter-bar" aria-label="Denetim durum filtresi">
+      <div className="ctm-filter-bar" aria-label={lang === "en" ? "Audit status filter" : "Denetim durum filtresi"}>
         {filters.map((item) => (
           <button
             className={filter === item ? "is-active" : ""}
@@ -59,7 +65,7 @@ export function AuditsPanel({
 
       <div className="ctm-data-list ctm-audit-list">
         <div className="ctm-data-list__head" aria-hidden="true">
-          <span>Denetim</span><span>Kuruluş</span><span>Tarih</span><span>Durum</span>
+          <span>{lang === "en" ? "Audit" : "Denetim"}</span><span>{lang === "en" ? "Organization" : "Kuruluş"}</span><span>{lang === "en" ? "Date" : "Tarih"}</span><span>{lang === "en" ? "Status" : "Durum"}</span>
         </div>
         {filtered.map((audit) => (
           <button
@@ -70,14 +76,14 @@ export function AuditsPanel({
             onClick={() => onSelect(audit)}
             aria-label={`${audit.name} detayını aç`}
           >
-            <span data-label="Denetim">
+            <span data-label={lang === "en" ? "Audit" : "Denetim"}>
               <small>{audit.id}</small>
               <strong>{audit.name}</strong>
             </span>
-            <span data-label="Kuruluş">{audit.organization}</span>
-            <span data-label="Tarih">{audit.date}</span>
-            <span data-label="Durum">
-              <em className={`ctm-status ctm-status--${audit.status.toLocaleLowerCase("tr-TR").replace("ı", "i")}`}>
+            <span data-label={lang === "en" ? "Organization" : "Kuruluş"}>{audit.organization}</span>
+            <span data-label={lang === "en" ? "Date" : "Tarih"}>{audit.date}</span>
+            <span data-label={lang === "en" ? "Status" : "Durum"}>
+              <em className={`ctm-status ctm-status--${audit.status.toLocaleLowerCase("en-US").replace(" ", "-").replace("ı", "i")}`}>
                 {audit.status}
               </em>
             </span>

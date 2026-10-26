@@ -30,6 +30,7 @@ export interface ContactFormErrors {
   fullName?: string;
   company?: string;
   email?: string;
+  phone?: string;
   solution?: string;
   requestType?: string;
   message?: string;

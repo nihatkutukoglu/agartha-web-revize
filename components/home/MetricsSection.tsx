@@ -1,7 +1,11 @@
+"use client";
+
 import { Plus, TrendingUp, UserRound } from "lucide-react";
-import { metrics } from "@/data/home";
+import { getMetrics } from "@/data/home";
 import { AnimatedMetricValue } from "./AnimatedMetricValue";
 import { SectionReveal } from "./SectionReveal";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 import styles from "./MetricsSection.module.css";
 
 const metricIcons = {
@@ -11,6 +15,10 @@ const metricIcons = {
 };
 
 export function MetricsSection() {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const metrics = getMetrics(lang);
+
   return (
     <section
       className={`metrics-section ${styles.section}`}

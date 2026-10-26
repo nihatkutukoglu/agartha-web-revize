@@ -6,19 +6,24 @@ import {
   ArrowUpRight,
   Blocks,
   Network,
-  ShieldCheck,
+  Shield,
 } from "lucide-react";
-import { technologyFeatures } from "@/data/home";
+import { getTechnologyFeatures } from "@/data/home";
 import { SectionReveal } from "./SectionReveal";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
 const featureIcons = {
-  shield: ShieldCheck,
+  shield: Shield,
   activity: Activity,
   blocks: Blocks,
   network: Network,
 };
 
 export function TechnologyVideoSection() {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const technologyFeatures = getTechnologyFeatures(lang);
   const [videoFailed, setVideoFailed] = useState(false);
 
   return (
@@ -63,15 +68,22 @@ export function TechnologyVideoSection() {
           </div>
 
           <div className="technology-copy">
-            <span className="section-kicker">DİJİTAL OMURGA</span>
-            <h2>Kritik süreçlerin arkasında güçlü bir teknoloji altyapısı.</h2>
+            <span className="section-kicker">
+              {lang === "en" ? "DIGITAL BACKBONE" : "DİJİTAL OMURGA"}
+            </span>
+            <h2>
+              {lang === "en" 
+                ? "A strong technology infrastructure behind critical processes." 
+                : "Kritik süreçlerin arkasında güçlü bir teknoloji altyapısı."}
+            </h2>
             <p>
-              Verileri, iş akışlarını ve kurum içi operasyonları güvenli ve
-              ölçeklenebilir sistemlerde bir araya getiriyoruz.
+              {lang === "en"
+                ? "We bring data, workflows, and internal operations together in secure and scalable systems."
+                : "Verileri, iş akışlarını ve kurum içi operasyonları güvenli ve ölçeklenebilir sistemlerde bir araya getiriyoruz."}
             </p>
             <div className="technology-features">
               {technologyFeatures.map((feature) => {
-                const Icon = featureIcons[feature.icon];
+                const Icon = featureIcons[feature.icon as keyof typeof featureIcons];
                 return (
                   <div key={feature.label}>
                     <span>
@@ -82,8 +94,8 @@ export function TechnologyVideoSection() {
                 );
               })}
             </div>
-            <a className="button button--primary" href="#neden-agartha">
-              Teknolojimizi Keşfedin
+            <a className="button button--primary" href={`/${lang}#neden-agartha`}>
+              {lang === "en" ? "Explore Our Technology" : "Teknolojimizi Keşfedin"}
               <ArrowUpRight size={17} aria-hidden="true" />
             </a>
           </div>

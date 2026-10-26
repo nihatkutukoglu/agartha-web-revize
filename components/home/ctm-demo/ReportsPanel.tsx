@@ -1,11 +1,16 @@
 import { ArrowUpRight, FileBarChart } from "lucide-react";
-import { monthlyActivity, reportRecords } from "@/data/ctmDemoData";
+import { monthlyActivity, getReportRecords } from "@/data/ctmDemoData";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
 interface ReportsPanelProps {
   onView: (title: string) => void;
 }
 
 export function ReportsPanel({ onView }: ReportsPanelProps) {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const reportRecords = getReportRecords(lang);
   return (
     <div className="ctm-panel" data-testid="ctm-panel-reports">
       <article className="ctm-card ctm-monthly-chart">

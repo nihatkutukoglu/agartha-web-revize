@@ -9,7 +9,7 @@ export default function KurumsalPage() {
       <main className="site-shell" id="top">
         <Navbar />
         <div className="pt-24 lg:pt-32">
-          <AboutSection />
+          <AboutSection corporatePage />
         </div>
         <Footer />
       </main>

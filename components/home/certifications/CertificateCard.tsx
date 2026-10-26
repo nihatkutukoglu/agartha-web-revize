@@ -3,6 +3,8 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, ChevronDown, FileCheck2, ShieldCheck } from "lucide-react";
 import type { CertificateData } from "@/data/certifications";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
 interface CertificateCardProps {
   certificate: CertificateData;
@@ -19,6 +21,8 @@ export function CertificateCard({
 }: CertificateCardProps) {
   const reduceMotion = useReducedMotion();
   const scopeId = `${certificate.id}-scope`;
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
 
   return (
     <article className={`certificate-card certificate-card--${certificate.id}`}>
@@ -51,7 +55,7 @@ export function CertificateCard({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: reduceMotion ? 0 : 0.2 }}
           >
-            <strong>Demo kapsam görünümü</strong>
+            <strong>{lang === "en" ? "Demo scope view" : "Demo kapsam görünümü"}</strong>
             <p>{certificate.scope}</p>
           </motion.div>
         )}
@@ -64,7 +68,7 @@ export function CertificateCard({
           aria-controls={scopeId}
           onClick={onToggle}
         >
-          Kapsamı Gör
+          {lang === "en" ? "View Scope" : "Kapsamı Gör"}
           <ChevronDown
             className={active ? "is-rotated" : ""}
             size={15}
@@ -72,7 +76,7 @@ export function CertificateCard({
           />
         </button>
         <button type="button" onClick={onInspect}>
-          Belgeyi İncele
+          {lang === "en" ? "Inspect Document" : "Belgeyi İncele"}
           <ArrowUpRight size={14} aria-hidden="true" />
         </button>
       </div>

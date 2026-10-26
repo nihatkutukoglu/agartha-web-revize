@@ -29,15 +29,6 @@ export function OfficeVisual() {
           background: "#111923",
         }}
       >
-        <div className="office-placeholder" aria-hidden="true">
-          <span className="office-placeholder__window office-placeholder__window--one" />
-          <span className="office-placeholder__window office-placeholder__window--two" />
-          <span className="office-placeholder__table" />
-          <span className="office-placeholder__chair office-placeholder__chair--one" />
-          <span className="office-placeholder__chair office-placeholder__chair--two" />
-          <span className="office-placeholder__light" />
-        </div>
-
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="office-visual__image"

@@ -1,11 +1,16 @@
 import { BadgeCheck, CalendarClock, CircleCheckBig, Plus } from "lucide-react";
-import { licenseRecords } from "@/data/ctmDemoData";
+import { getLicenseRecords } from "@/data/ctmDemoData";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
 interface LicensesPanelProps {
   onNewApplication: () => void;
 }
 
 export function LicensesPanel({ onNewApplication }: LicensesPanelProps) {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const licenseRecords = getLicenseRecords(lang);
   return (
     <div className="ctm-panel" data-testid="ctm-panel-licenses">
       <div className="ctm-panel-heading">

@@ -4,10 +4,17 @@ export type NavigationItem = {
   active?: boolean;
 };
 
-export const navigationItems: NavigationItem[] = [
-  { label: "Çözümler", href: "/#cozumler", active: true },
-  { label: "Sektörler", href: "/#neden-agartha" },
-  { label: "Başarı Hikâyeleri", href: "/#basari-hikayesi" },
-  { label: "Hakkımızda", href: "/kurumsal" },
-  { label: "İletişim", href: "/#iletisim" },
-];
+import { dictionaries, Lang } from "./dictionary";
+
+export const getNavigationItems = (lang: Lang): NavigationItem[] => {
+  const dict = dictionaries[lang] || dictionaries.tr;
+  return [
+    { label: dict.nav.solutions, href: `/${lang}#cozumler`, active: true },
+    { label: dict.nav.sectors, href: `/${lang}#neden-agartha` },
+    { label: dict.nav.stories, href: `/${lang}#basari-hikayesi` },
+    { label: dict.nav.about, href: `/${lang}/kurumsal` },
+    { label: lang === "tr" ? "Gelişmeler" : "Developments", href: `/${lang}/gelismeler` },
+    { label: dict.nav.press, href: `/${lang}/basinda-biz` },
+    { label: dict.nav.contact, href: `/${lang}#iletisim` },
+  ];
+};

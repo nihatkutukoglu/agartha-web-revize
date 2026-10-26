@@ -3,9 +3,14 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import styles from "../AboutSection.module.css";
+import { useParams } from "next/navigation";
+import { dictionaries, Lang } from "@/data/dictionary";
 
 export function AboutCta() {
   const reduceMotion = useReducedMotion();
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const dict = dictionaries[lang] || dictionaries.tr;
 
   const reveal = {
     initial: { opacity: 0, scale: reduceMotion ? 1 : 0.98 },
@@ -19,14 +24,14 @@ export function AboutCta() {
 
   return (
     <motion.div className={styles.ctaArea} {...reveal}>
-      <h3 className={styles.ctaText}>Operasyonlarınızı birlikte dijitalleştirelim.</h3>
+      <h3 className={styles.ctaText}>{dict.aboutCta.text}</h3>
       <div className={styles.ctaButtons}>
-        <a href="#cozumler" className={`button ${styles.btnPrimary}`}>
-          Çözümleri İnceleyin
+        <a href={`/${lang}#cozumler`} className={`button ${styles.btnPrimary}`}>
+          {dict.aboutCta.btn1}
           <ArrowUpRight size={18} aria-hidden="true" />
         </a>
-        <a href="#iletisim" className={`button ${styles.btnSecondary}`}>
-          Bizimle İletişime Geçin
+        <a href={`/${lang}#iletisim`} className={`button ${styles.btnSecondary}`}>
+          {dict.aboutCta.btn2}
         </a>
       </div>
     </motion.div>

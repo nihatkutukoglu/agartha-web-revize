@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
-import "./globals.css";
+import { notFound } from "next/navigation";
+import { dictionaries } from "@/data/dictionary";
+import "../globals.css";
 
 const geist = Geist({
   variable: "--font-heading",
@@ -22,17 +24,22 @@ export const metadata: Metadata = {
   description:
     "Kamu, sivil havacılık ve kurumsal operasyonlar için güvenli teknoloji çözümleri.",
   icons: {
-    icon: "/favicon.svg",
+    icon: "/agartha-chatbot-logo.png",
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ lang: string }>;
 }>) {
+  const { lang } = await params;
+  // Unknown segments (e.g. /favicon.ico) would otherwise render with an invalid lang and crash.
+  if (!(lang in dictionaries)) notFound();
   return (
-    <html lang="tr">
+    <html lang={lang}>
       <body className={`${geist.variable} ${inter.variable} ${geistMono.variable}`}>
         {children}
       </body>

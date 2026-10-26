@@ -1,5 +1,7 @@
 import { Bell, MapPin } from "lucide-react";
-import { ctmNavigation, type CtmPanelId } from "@/data/ctmDemoData";
+import { getCtmNavigation, type CtmPanelId } from "@/data/ctmDemoData";
+import { useParams } from "next/navigation";
+import { Lang } from "@/data/dictionary";
 
 interface CtmTopbarProps {
   activePanel: CtmPanelId;
@@ -7,6 +9,9 @@ interface CtmTopbarProps {
 }
 
 export function CtmTopbar({ activePanel, onNotification }: CtmTopbarProps) {
+  const params = useParams();
+  const lang = (params?.lang as Lang) || "tr";
+  const ctmNavigation = getCtmNavigation(lang);
   const panel = ctmNavigation.find((item) => item.id === activePanel)!;
 
   return (
